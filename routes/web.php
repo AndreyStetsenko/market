@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
+use Victorybiz\LaravelCryptoPaymentGateway\Http\Controllers\CryptoPaymentController;
+use App\Http\Controllers\Payment\PaymentController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -159,3 +162,10 @@ Route::group([
     Route::delete('page/remove/image', 'PageController@removeImage')
         ->name('page.remove.image');
 });
+
+// Payments
+// Route::match(['get', 'post'], '/payments/crypto/pay', [CryptoPaymentController::class])
+//                 ->name('payments.crypto.pay');
+
+// Route::post('/payments/crypto/callback', [PaymentController::class, 'callback'])
+//                 ->withoutMiddleware(['web', 'auth']);

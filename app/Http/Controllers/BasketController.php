@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Basket;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Coinremitter\Coinremitter;
 
 class BasketController extends Controller {
 
@@ -81,10 +82,29 @@ class BasketController extends Controller {
             'address' => 'required|max:255',
         ]);
 
+        // Создание инвоиса на Coinremitter
+        // $wallet = new Coinremitter($request->method);
+        // $param = [
+        //     'amount'=> $this->basket->getAmount(),      //required.
+        //     'notify_url'=> 'https://the3.cloud', //optional,url on which you wants to receive notification,
+        //     'fail_url' => 'http://market-n.test/fail-url', //optional,url on which user will be redirect if user cancel invoice,
+        //     'suceess_url' => 'http://market-n.test/basket/success', //optional,url on which user will be redirect when invoice paid,
+        //     'name'=>'',//optional,
+        //     'currency'=>'usd',//optional,
+        //     'expire_time'=>'30',//optional, invoice will expire in 30 minutes.
+        //     'description'=>'Test',//optional.
+        // ];
+        // $invoice  = $wallet->create_invoice($param);
+
         // валидация пройдена, сохраняем заказ
         $user_id = auth()->check() ? auth()->user()->id : null;
         $order = Order::create(
-            $request->all() + ['amount' => $this->basket->getAmount(), 'user_id' => $user_id]
+            $request->all() 
+            + [
+                'amount' => $this->basket->getAmount(), 
+                'user_id' => $user_id, 
+                // 'invoice' => $invoice['data']['invoice_id']
+                ]
         );
 
         foreach ($this->basket->products as $product) {
@@ -100,6 +120,16 @@ class BasketController extends Controller {
         // очищаем корзину
         $this->basket->clear();
 
+        $result = [
+            'invoice_id'=>$order->invoice
+        ];
+        $invoice_result = $wallet->get_invoice($result);
+        $redirect_url = $invoice_result['data']['url'];
+
+        // Редирект на мерчант
+        // return redirect($redirect_url);
+
+        // Редирект на страницу подтверждения заказа
         return redirect()
             ->route('basket.success')
             ->with('order_id', $order->id);

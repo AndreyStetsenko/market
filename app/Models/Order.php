@@ -15,6 +15,7 @@ class Order extends Model {
         'comment',
         'amount',
         'status',
+        'invoice',
     ];
 
     public const STATUSES = [

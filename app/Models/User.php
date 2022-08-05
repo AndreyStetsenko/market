@@ -7,9 +7,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Illuminate\Auth\Notifications\ResetPassword;
+use Laravel\Cashier\Billable;
 
 class User extends Authenticatable {
-    use Notifiable;
+    use Notifiable,
+        Billable;
 
     /**
      * The attributes that are mass assignable.

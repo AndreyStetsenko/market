@@ -28,6 +28,14 @@
                       maxlength="255" rows="2">{{ old('comment') ?? $profile->comment ?? '' }}</textarea>
         </div>
         <div class="form-group">
+            <label>Выберите метод оплаты</label>
+            <select name="method" required>
+                <option value="">-- Выберите валюту</option>
+                <option value="BCH">BCH</option>
+                <option value="TCN">TCN</option>
+            </select>
+        </div>
+        <div class="form-group">
             <button type="submit" class="btn btn-success">Оформить</button>
         </div>
     </form>
