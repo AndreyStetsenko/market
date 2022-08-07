@@ -22,7 +22,18 @@
                     {{-- Auctions ends in <div class="de_countdown" data-year="2022" data-month="6" data-day="16" data-hour="8"></div> --}}
                     <h2>{{ $product->name }}</h2>
                     <div class="item_info_counts">
-                        <div class="item_info_type"><a href="{{ route('catalog.category', $product->category->slug) }}" class="text-white">{{ $product->category->name }}</a></div>
+                        @if ($product->collection->id ?? '')
+                        <div class="item_info_type">
+                            <a href="{{ route('user.collection.show', $product->collection->id) }}" class="text-white">
+                                {{ $product->collection->name }}
+                            </a>
+                        </div>
+                        @endif
+                        <div class="item_info_type">
+                            <a href="{{ route('catalog.category', $product->category->slug) }}" class="text-white">
+                                {{ $product->category->name }}
+                            </a>
+                        </div>
                         @if($product->new)
                             <div class="item_info_type">Новинка</div>
                         @endif

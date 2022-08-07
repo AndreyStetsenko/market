@@ -14,6 +14,11 @@ class CollectionController extends Controller
         $this->imageSaver = $imageSaver;
     }
 
+    public function index() {
+        $collections = Collection::where('user_id', auth()->user()->id);
+        return view('site.user.collection.index', compact('collections'));
+    }
+
     public function create() {
         return view('site.user.collection.create');
     }
@@ -31,6 +36,10 @@ class CollectionController extends Controller
         return redirect()
             ->route('user.profile', auth()->user()->id)
             ->with('success', 'Новая коллекция успешно создана');
+    }
+
+    public function show(Collection $collection) {
+        return view('site.user.collection.show', compact('collection'));
     }
 
     public function edit(Collection $collection) {

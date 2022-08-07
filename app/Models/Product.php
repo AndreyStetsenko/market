@@ -76,6 +76,10 @@ class Product extends Model {
         return $this->belongsTo(User::class);
     }
 
+    public function collection() {
+        return $this->belongsTo(Collection::class);
+    }
+
     /**
      * Позволяет выбирать товары категории и всех ее потомков
      *
