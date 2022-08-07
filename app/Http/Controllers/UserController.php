@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Product;
 use App\Models\Collection;
+use App\Models\Wallets;
 use App\Helpers\ImageSaver;
 use Illuminate\Support\Facades\Hash;
 
@@ -40,6 +41,19 @@ class UserController extends Controller {
 
     public function update(Request $request) {
         $user = User::find(auth()->user()->id);
+        $wallet = Wallets::where('user_id', auth()->user()->id)->get();
+        if (count($wallet) < 1) {
+            $wallet = new Wallets();
+            $wallet->user_id = auth()->user()->id;
+            $wallet->currency = 'usdt';
+            $wallet->balance = '0';
+            $wallet->wallet = $request->wallet;
+            $wallet->save();
+        } else {
+            $wallet = Wallets::where([['user_id', auth()->user()->id], ['currency', 'usdt']])->first();
+            $wallet->wallet = $request->wallet;
+            $wallet->update();
+        }
         $user->name = $request->input('name');
         $user->email = $request->input('email');
         $user->username = $request->input('username');
