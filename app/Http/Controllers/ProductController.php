@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use \Cviebrock\EloquentSluggable\Services\SlugService;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Helpers\ImageSaver;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductCatalogRequest;
+use App\Models\Collection;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
@@ -45,11 +48,25 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create() {
+        $n = 64;
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $randomString = '';
+    
+        for ($i = 0; $i < $n; $i++) {
+            $index = rand(0, strlen($characters) - 1);
+            $randomString .= $characters[$index];
+        }
+
+        // $slug = Hash::make($randomString);
+        $slug = $randomString;
+    
+        // все коллекции пользователя
+        $collections = Collection::where('user_id', auth()->user()->id)->get();
         // все категории для возможности выбора родителя
         $items = Category::all();
         // все бренды для возмозжности выбора подходящего
         $brands = Brand::all();
-        return view('user.product.create', compact('items', 'brands'));
+        return view('site.user.product.create', compact('items', 'brands', 'collections', 'slug'));
     }
 
     /**
@@ -68,7 +85,7 @@ class ProductController extends Controller
         $data['image'] = $this->imageSaver->upload($request, null, 'product');
         $product = Product::create($data);
         return redirect()
-            ->route('user.product.show', ['product' => $product->id])
+            ->route('catalog.product', ['product' => $product->slug])
             ->with('success', 'Новый товар успешно создан');
     }
 
@@ -89,11 +106,11 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Product $product) {
+        // Коллекции текущего пользователя
+        $collections = Collection::where('user_id', auth()->user()->id)->get();
         // все категории для возможности выбора родителя
         $items = Category::all();
-        // все бренды для возмозжности выбора подходящего
-        $brands = Brand::all();
-        return view('user.product.edit', compact('product', 'items', 'brands'));
+        return view('site.user.product.edit', compact('product', 'items', 'collections'));
     }
 
     /**
@@ -103,7 +120,7 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(ProductCatalogRequest $request, Product $product) {
+    public function update(Request $request, Product $product) {
         $request->merge([
             'new' => $request->has('new'),
             'hit' => $request->has('hit'),
@@ -112,8 +129,19 @@ class ProductController extends Controller
         $data = $request->all();
         $data['image'] = $this->imageSaver->upload($request, $product, 'product');
         $product->update($data);
+        // $product->name = $request->name;
+        // $product->price = $request->price;
+        // $product->new = $request->new;
+        // $product->hit = $request->hit;
+        // $product->sale = $request->sale;
+        // $product->category_id = $request->category_id;
+        // $product->collection_id = $request->collection_id;
+        // $product->content = $request->content;
+        // if ($request->image) $product->image = $this->imageSaver->upload($request, null, 'product');
+        // $product->update();
+
         return redirect()
-            ->route('user.product.show', ['product' => $product->id])
+            ->route('user.product.edit', ['product' => $product->id])
             ->with('success', 'Товар был успешно обновлен');
     }
 

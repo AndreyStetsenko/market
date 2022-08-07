@@ -39,5 +39,9 @@ class ComposerServiceProvider extends ServiceProvider
         View::composer('layout.part.pages', function($view) {
             $view->with(['pages' => Page::all()]);
         });
+
+        View::composer('site.layout.main', function($view) {
+            $view->with(['positions' => Basket::getCount()]);
+        });
     }
 }

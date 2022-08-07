@@ -32,9 +32,9 @@ class ProductFilter {
                 $min = $this->builder->get()->min('price'); // цена самого дешевого товара
                 $avg = ($min + $max) * 0.5;
                 if ($value == 'min') {
-                    $this->builder->where('price', '<=', $avg);
+                    $this->builder->orderBy('price', 'asc');
                 } else {
-                    $this->builder->where('price', '>=', $avg);
+                    $this->builder->orderBy('price', 'desc');
                 }
             }
         }

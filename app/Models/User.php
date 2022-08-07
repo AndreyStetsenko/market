@@ -19,7 +19,11 @@ class User extends Authenticatable {
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'password',
+        'username',
+        'avatar',
     ];
 
     /**
@@ -87,5 +91,23 @@ class User extends Authenticatable {
             ]));
         });
         $this->notify($notification);
+    }
+
+    /**
+     * Связь «один ко многим» таблицы `users` с таблицей `wallet`
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function wallet() {
+        return $this->hasMany(Wallets::class);
+    }
+
+    /**
+     * Связь «один ко многим» таблицы `users` с таблицей `collections`
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function collections() {
+        return $this->hasMany(Collection::class);
     }
 }

@@ -21,7 +21,7 @@ class BasketController extends Controller {
     public function index() {
         $products = $this->basket->products;
         $amount = $this->basket->getAmount();
-        return view('basket.index', compact('products', 'amount'));
+        return view('site.user.basket.index', compact('products', 'amount'));
     }
 
     /**
@@ -43,7 +43,7 @@ class BasketController extends Controller {
                 $profile = $user->profiles()->whereIdAndUserId($prof_id, $user->id)->first();
             }
         }
-        return view('basket.checkout', compact('profiles', 'profile'));
+        return view('site.user.basket.checkout', compact('profiles', 'profile'));
     }
 
     /**
@@ -83,18 +83,18 @@ class BasketController extends Controller {
         ]);
 
         // Создание инвоиса на Coinremitter
-        // $wallet = new Coinremitter($request->method);
-        // $param = [
-        //     'amount'=> $this->basket->getAmount(),      //required.
-        //     'notify_url'=> 'https://the3.cloud', //optional,url on which you wants to receive notification,
-        //     'fail_url' => 'http://market-n.test/fail-url', //optional,url on which user will be redirect if user cancel invoice,
-        //     'suceess_url' => 'http://market-n.test/basket/success', //optional,url on which user will be redirect when invoice paid,
-        //     'name'=>'',//optional,
-        //     'currency'=>'usd',//optional,
-        //     'expire_time'=>'30',//optional, invoice will expire in 30 minutes.
-        //     'description'=>'Test',//optional.
-        // ];
-        // $invoice  = $wallet->create_invoice($param);
+        $wallet = new Coinremitter($request->method);
+        $param = [
+            'amount'=> $this->basket->getAmount(),      //required.
+            'notify_url'=> 'https://the3.cloud', //optional,url on which you wants to receive notification,
+            'fail_url' => route('basket.success'), //optional,url on which user will be redirect if user cancel invoice,
+            'suceess_url' => route('basket.success'), //optional,url on which user will be redirect when invoice paid,
+            'name'=>'',//optional,
+            'currency'=>'usd',//optional,
+            'expire_time'=>'30',//optional, invoice will expire in 30 minutes.
+            'description'=>'Test',//optional.
+        ];
+        $invoice  = $wallet->create_invoice($param);
 
         // валидация пройдена, сохраняем заказ
         $user_id = auth()->check() ? auth()->user()->id : null;
@@ -103,7 +103,7 @@ class BasketController extends Controller {
             + [
                 'amount' => $this->basket->getAmount(), 
                 'user_id' => $user_id, 
-                // 'invoice' => $invoice['data']['invoice_id']
+                'invoice' => $invoice['data']['invoice_id']
                 ]
         );
 
@@ -127,12 +127,12 @@ class BasketController extends Controller {
         $redirect_url = $invoice_result['data']['url'];
 
         // Редирект на мерчант
-        // return redirect($redirect_url);
+        return redirect($redirect_url);
 
         // Редирект на страницу подтверждения заказа
-        return redirect()
-            ->route('basket.success')
-            ->with('order_id', $order->id);
+        // return redirect()
+        //     ->route('basket.success')
+        //     ->with('order_id', $order->id);
     }
 
     /**
@@ -148,6 +148,10 @@ class BasketController extends Controller {
             // если покупатель попал сюда не после оформления заказа
             return redirect()->route('basket.index');
         }
+    }
+
+    public function fail(Request $request) {
+        return redirect()->route('basket.index');
     }
 
     /**

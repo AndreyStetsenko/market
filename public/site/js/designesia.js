@@ -340,7 +340,7 @@
         jQuery("#collection-carousel-alt").owlCarousel({
             center: false,
             items:5,
-            loop:true,
+            loop:false,
             margin:25,
             nav:true,
             navText : ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"],
@@ -2113,4 +2113,29 @@
 		 
 		
      });
+
+     $('#product-create input[name="name"]').on('input', function() {
+        $('#product-create-preview').find('.product-preview-name').text( $(this).val() );
+     });
+
+     $('#product-create input[name="price"]').on('input', function() {
+        $('#product-create-preview').find('.nft__item_price span').text( $(this).val() );
+     });
+
+     $('#product-create input[name="image"]').on('change', function() {
+        readURL(this);
+     });
+
+     function readURL(input) {
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+    
+            reader.onload = function (e) {
+                $('#get_file_2').attr('src', e.target.result);
+            };
+    
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
  })(jQuery);

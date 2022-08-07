@@ -5,13 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Stem\LinguaStemRu;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class Product extends Model {
+
+    use Sluggable;
 
     protected $fillable = [
         'category_id',
         'brand_id',
         'creator_id',
+        'collection_id',
         'name',
         'slug',
         'content',
@@ -21,6 +25,20 @@ class Product extends Model {
         'hit',
         'sale',
     ];
+
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'name'
+            ]
+        ];
+    }
 
     /**
      * Связь «товар принадлежит» таблицы `products` с таблицей `categories`

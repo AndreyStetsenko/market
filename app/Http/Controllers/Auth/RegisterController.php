@@ -76,7 +76,7 @@ class RegisterController extends Controller
      * Сразу после регистрации выполняем редирект и устанавливаем flash-сообщение
      */
     protected function registered(Request $request, $user) {
-        return redirect()->route('user.index')
+        return redirect()->route('user.personal')
             ->with('success', 'Регистрация на сайте прошла успешно');
     }
 }
