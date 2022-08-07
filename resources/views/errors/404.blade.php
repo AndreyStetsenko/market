@@ -1,4 +1,7 @@
-@extends('layout.site', ['title' => 'Страница не найдена'])
+<script>
+    window.location = '/';
+</script>
+@extends('site.layout.main')
 
 @section('content')
     <div class="row">
