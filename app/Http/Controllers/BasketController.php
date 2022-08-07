@@ -96,8 +96,6 @@ class BasketController extends Controller {
         ];
         $invoice  = $wallet->create_invoice($param);
 
-        dd($invoice);
-
         // валидация пройдена, сохраняем заказ
         $user_id = auth()->check() ? auth()->user()->id : null;
         $order = Order::create(
