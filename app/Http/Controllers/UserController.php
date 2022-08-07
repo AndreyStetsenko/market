@@ -58,7 +58,7 @@ class UserController extends Controller {
         $user->email = $request->input('email');
         $user->username = $request->input('username');
         if ($request->image) $user->avatar = $this->imageSaver->upload($request, null, 'avatar');
-        $user->password = Hash::make($request->input('password'));
+        if ($request->input('password')) $user->password = Hash::make($request->input('password'));
         $user->update();
         
         return redirect()
