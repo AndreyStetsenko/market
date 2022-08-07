@@ -1,6 +1,6 @@
 <div class="nft_coll style-2">
     <div class="nft_wrap">
-        <a href="{{ route('user.collection.show', $collection->id) }}">
+        <a href="{{ route('collection.show', $collection->id) }}">
             @if ($collection->image != 'avatar.jpeg')
                 @php($url = url('storage/catalog/collection/source/' . $collection->image))
                 <img src="{{ $url }}" class="lazy img-fluid" alt="">
@@ -21,7 +21,7 @@
         <i class="fa fa-check"></i>
     </div>
     <div class="nft_coll_info">
-        <a href="{{ route('user.collection.show', $collection->id) }}"><h4>{{ $collection->name }}</h4></a>
+        <a href="{{ route('collection.show', $collection->id) }}"><h4>{{ $collection->name }}</h4></a>
         {{-- <span>ERC-192</span> --}}
     </div>
 </div>

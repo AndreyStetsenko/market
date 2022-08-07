@@ -24,7 +24,7 @@
                     <div class="item_info_counts">
                         @if ($product->collection->id ?? '')
                         <div class="item_info_type">
-                            <a href="{{ route('user.collection.show', $product->collection->id) }}" class="text-white">
+                            <a href="{{ route('collection.show', $product->collection->id) }}" class="text-white">
                                 {{ $product->collection->name }}
                             </a>
                         </div>

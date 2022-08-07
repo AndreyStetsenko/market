@@ -132,12 +132,13 @@ Route::group([
     // CRUD-операции над аккаунтом пользователя
     // Route::get('account', 'AccountController')->name('account.show');
     Route::get('collections', 'CollectionController@index')->name('collection.index');
-    Route::get('collection/{collection}', 'CollectionController@show')->name('collection.show');
     Route::get('collection/create', 'CollectionController@create')->name('collection.create');
     Route::get('collection/edit/{collection}', 'CollectionController@edit')->name('collection.edit');
     Route::post('collection/store', 'CollectionController@store')->name('collection.store');
     Route::post('collection/update/{collection}', 'CollectionController@update')->name('collection.update');
 });
+
+Route::get('collection/{collection}', 'CollectionController@show')->name('collection.show');
 
 /*
  * Панель управления магазином для администратора сайта
