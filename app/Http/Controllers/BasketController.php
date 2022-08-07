@@ -86,7 +86,7 @@ class BasketController extends Controller {
         $wallet = new Coinremitter($request->method);
         $param = [
             'amount'=> $this->basket->getAmount(),      //required.
-            'notify_url'=> 'https://the3.cloud', //optional,url on which you wants to receive notification,
+            'notify_url'=> 'https://market.the3.cloud', //optional,url on which you wants to receive notification,
             'fail_url' => route('basket.success'), //optional,url on which user will be redirect if user cancel invoice,
             'suceess_url' => route('basket.success'), //optional,url on which user will be redirect when invoice paid,
             'name'=>'',//optional,
