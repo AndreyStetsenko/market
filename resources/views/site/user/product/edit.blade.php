@@ -101,8 +101,8 @@
                             @php
                                 $category_id = old('category_id') ?? $product->category_id ?? 0;
                             @endphp
-                            <select name="category_id" class="form-control" title="Категория">
-                                <option value="0">Выберите</option>
+                            <select name="category_id" class="form-control" title="Категория" required>
+                                <option value="">Выберите</option>
                                 @if (count($items))
                                     @include('admin.product.part.branch', ['level' => -1, 'parent' => 0])
                                 @endif
@@ -113,8 +113,8 @@
 
                         <h5>Коллекция</h5>
                         <div class="form-group">
-                            <select name="collection_id" class="form-control" title="Коллекция">
-                                <option value="0">Выберите</option>
+                            <select name="collection_id" class="form-control" title="Коллекция" required>
+                                <option value="">Выберите</option>
                                 @foreach($collections as $collection)
                                     <option value="{{ $collection->id }}" @if ($collection->id == $product->collection_id) selected @endif>
                                         {{ $collection->name }}
