@@ -71,11 +71,13 @@
                                         <h4>{{ auth()->user()->name }}</h4>
                                     </div>
                                     <div class="spacer-10"></div>
+                                    @if (auth()->user()->wallet[0]->wallet ?? '')
                                     <div class="d-wallet">
                                         <h4>Кошелек</h4>
-                                        <span id="wallet" class="d-wallet-address">{{ auth()->user()->wallet[0]->wallet }}</span>
+                                        <span id="wallet" class="d-wallet-address">{{ auth()->user()->wallet[0]->wallet ?? '' }}</span>
                                         <button id="btn_copy" title="Copy Text">Copy</button>
                                     </div>
+                                    @endif
             
                                     <div class="d-line"></div>
             

@@ -59,7 +59,7 @@
 
                                             <h5>Кошелек USDT</h5>
                                             <input type="text" name="wallet" id="wallet" class="form-control" 
-                                                    placeholder="Wallet" value="{{ $user->wallet[0]->wallet }}" />
+                                                    placeholder="Wallet" value="{{ $user->wallet[0]->wallet ?? '' }}" />
 
                                         </div>
                                 </div>
