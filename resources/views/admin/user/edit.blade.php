@@ -35,6 +35,14 @@
                                     required maxlength="255" placeholder="Email" value="{{ old('email') ?? $user->email ?? '' }}">
                         </div>
 
+                        <div class="mt-3">
+                            <label for="email" class="form-label">Роль</label>
+                            <select name="admin" class="form-control">
+                                <option value="0" @if ($user->admin == 0) selected @endif>Пользователь</option>
+                                <option value="1" @if ($user->admin == 1) selected @endif>Администратор</option>
+                            </select>
+                        </div>
+
                         <div class="form-check mt-2">
                             <input id="change_password" class="form-check-input" type="checkbox" name="change_password">
                             <label class="form-check-label" for="change_password">Изменить пароль пользователя</label>
