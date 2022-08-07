@@ -83,7 +83,7 @@
                             @foreach ($collections as $collection)
                             <div class="nft_coll style-2">
                                 <div class="nft_wrap">
-                                    <a href="03_grey-collection.html">
+                                    <a href="{{ route('user.profile', $collection->user->id) }}">
                                         @if ($collection->image != 'avatar.jpeg')
                                             @php($url = url('storage/catalog/collection/source/' . $collection->image))
                                             <img src="{{ $url }}" class="lazy img-fluid" alt="">
