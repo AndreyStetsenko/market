@@ -172,6 +172,15 @@
                             <a href="#" onclick="event.preventDefault()">Подробнее</a>
                         </div>
                     </div> 
+                    <div class="d-flex justify-content-between">
+                        <form method="post" action="{{ route('user.product.destroy', $product->id)}}">
+                            @csrf
+                            @method('DELETE')
+                            
+                            <input type="submit" id="submit" class="btn-main btn-danger" value="Удалить" onclick="if(confirm('Bы уверены, что хотите удалить товар?')) return true; else return false;">
+                        </form>
+                        <a href="{{ route('catalog.product', $product->slug) }}" class="btn-main" target="_blank">Просмотр</a>
+                    </div>
                 </div>
             </div>
 
