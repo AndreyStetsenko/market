@@ -8,6 +8,7 @@ use Illuminate\Support\Carbon;
 class Order extends Model {
     protected $fillable = [
         'user_id',
+        'slug',
         'name',
         'email',
         'phone',

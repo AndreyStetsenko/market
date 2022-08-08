@@ -83,27 +83,38 @@ class BasketController extends Controller {
         ]);
 
         // Создание инвоиса на Coinremitter
-        $wallet = new Coinremitter($request->method);
-        $param = [
-            'amount'=> $this->basket->getAmount(),      //required.
-            'notify_url'=> 'https://the3.cloud', //optional,url on which you wants to receive notification,
-            'fail_url' => route('basket.success'), //optional,url on which user will be redirect if user cancel invoice,
-            'suceess_url' => route('basket.success'), //optional,url on which user will be redirect when invoice paid,
-            'name'=>'',//optional,
-            'currency'=>'usd',//optional,
-            'expire_time'=>'30',//optional, invoice will expire in 30 minutes.
-            'description'=>'Test',//optional.
-        ];
-        $invoice  = $wallet->create_invoice($param);
+        // $wallet = new Coinremitter($request->method);
+        // $param = [
+        //     'amount'=> $this->basket->getAmount(),      //required.
+        //     'notify_url'=> 'https://the3.cloud', //optional,url on which you wants to receive notification,
+        //     'fail_url' => route('basket.success'), //optional,url on which user will be redirect if user cancel invoice,
+        //     'suceess_url' => route('basket.success'), //optional,url on which user will be redirect when invoice paid,
+        //     'name'=>'',//optional,
+        //     'currency'=>'usd',//optional,
+        //     'expire_time'=>'30',//optional, invoice will expire in 30 minutes.
+        //     'description'=>'Test',//optional.
+        // ];
+        // $invoice  = $wallet->create_invoice($param);
+
+        $n = 64;
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $randomString = '';
+    
+        for ($i = 0; $i < $n; $i++) {
+            $index = rand(0, strlen($characters) - 1);
+            $randomString .= $characters[$index];
+        }
 
         // валидация пройдена, сохраняем заказ
         $user_id = auth()->check() ? auth()->user()->id : null;
         $order = Order::create(
             $request->all() 
             + [
+                'slug' => $randomString,
                 'amount' => $this->basket->getAmount(), 
                 'user_id' => $user_id, 
-                'invoice' => $invoice['data']['invoice_id']
+                // 'invoice' => $invoice['data']['invoice_id']
+                'invoice' => 0
                 ]
         );
 
@@ -120,33 +131,44 @@ class BasketController extends Controller {
         // очищаем корзину
         $this->basket->clear();
 
-        $result = [
-            'invoice_id'=>$order->invoice
-        ];
-        $invoice_result = $wallet->get_invoice($result);
-        $redirect_url = $invoice_result['data']['url'];
+        // $result = [
+        //     'invoice_id'=>$order->invoice
+        // ];
+        // $invoice_result = $wallet->get_invoice($result);
+        // $redirect_url = $invoice_result['data']['url'];
 
         // Редирект на мерчант
-        return redirect($redirect_url);
+        // return redirect($redirect_url);
 
         // Редирект на страницу подтверждения заказа
-        // return redirect()
-        //     ->route('basket.success')
-        //     ->with('order_id', $order->id);
+        return redirect()
+            ->route('basket.success', $order->slug)
+            ->with('order_id', $order->id);
     }
 
     /**
      * Сообщение об успешном оформлении заказа
      */
-    public function success(Request $request) {
-        if ($request->session()->exists('order_id')) {
-            // сюда покупатель попадает сразу после оформления заказа
-            $order_id = $request->session()->pull('order_id');
-            $order = Order::findOrFail($order_id);
-            return view('basket.success', compact('order'));
+    public function success(Request $request, $order) {
+        $order = Order::where('slug', $order)->firstOrFail();
+        $order_id = $order->id;
+
+        if ( auth()->check() ) {
+            if ( $order->user_id == auth()->user()->id ) {
+                return view('site.user.basket.success', compact('order'));
+            } else {
+                return redirect()->route('basket.index');
+            }
         } else {
-            // если покупатель попал сюда не после оформления заказа
-            return redirect()->route('basket.index');
+            if ($request->session()->exists('order_id')) {
+                // сюда покупатель попадает сразу после оформления заказа
+                $order_id = $request->session()->pull('order_id');
+                $order = Order::findOrFail($order_id);
+                return view('site.user.basket.success', compact('order'));
+            } else {
+                // если покупатель попал сюда не после оформления заказа
+                return redirect()->route('basket.index');
+            }
         }
     }
 

@@ -70,7 +70,7 @@ Route::group([
     Route::post('saveorder', 'BasketController@saveOrder')
         ->name('saveorder');
     // страница после успешного сохранения заказа в БД
-    Route::get('success', 'BasketController@success')
+    Route::get('success/{order}', 'BasketController@success')
         ->name('success');
     // страница ошибки заказа
     Route::get('fail', 'BasketController@fail')
@@ -116,6 +116,7 @@ Route::group([
     Route::get('edit', 'UserController@edit')->name('edit');
     Route::post('update', 'UserController@update')->name('update');
     Route::get('personal', 'UserController@personal')->name('personal');
+    Route::get('personal/collection/{collection}', 'UserController@collectionProducts')->name('personal.collection');
     Route::get('option/create', 'UserController@option')->name('create.option');
     // CRUD-операции над профилями пользователя
     Route::resource('profile', 'ProfileController');

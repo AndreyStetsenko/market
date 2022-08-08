@@ -1655,19 +1655,15 @@
     // --------------------------------------------------
 
     function copyText(element) {
-      var $copyText = jQuery(element).text();
-      var button = jQuery('#btn_copy');
-      navigator.clipboard.writeText($copyText).then(function() {
-        var originalText = button.text();
-        button.html('Copied!');        
-        button.addClass('clicked');
-        setTimeout(function(){
-          button.html(originalText);
-          button.removeClass('clicked');
-          }, 750);
-      }, function() {
-        button.html('Error');
-      });
+      /* Get the text field */
+    var copyText = document.getElementById(element);
+
+    /* Select the text field */
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+    /* Copy the text inside the text field */
+    navigator.clipboard.writeText(copyText.value);
     } 
 
     // --------------------------------------------------
@@ -1752,7 +1748,15 @@
 		}
 
         jQuery("#btn_copy").on("click", function() {
-            copyText("#wallet");
+            // copyText("#wallet");
+            var copyText = document.getElementById('wallet');
+
+            /* Select the text field */
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+            /* Copy the text inside the text field */
+            navigator.clipboard.writeText(copyText.value);
         });
 
         $('#mainmenu > li:has(ul)').addClass('menu-item-has-children');

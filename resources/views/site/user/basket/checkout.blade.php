@@ -75,14 +75,6 @@
                                             <textarea class="form-control" name="comment" placeholder="Комментарий"
                                                       maxlength="255" rows="2">{{ old('comment') ?? $profile->comment ?? '' }}</textarea>
                                         </div>
-
-                                        <div class="form-group">
-                                            <select name="method" required>
-                                                <option value="">-- Выберите валюту</option>
-                                                <option value="BCH">BCH</option>
-                                                <option value="TCN">TCN</option>
-                                            </select>
-                                        </div>
                                         
                                         <div class="spacer-20"></div>
 

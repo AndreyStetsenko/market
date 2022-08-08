@@ -68,10 +68,16 @@ class UserController extends Controller {
 
     public function personal() {
         $user = auth()->user();
-        $products = Product::where('creator_id', $user->id)->get();
         $collections = Collection::where('user_id', $user->id)->get();
         
-        return view('site.user.personal', compact('user', 'products', 'collections'));
+        return view('site.user.personal.index', compact('user', 'collections'));
+    }
+
+    public function collectionProducts(Collection $collection) {
+        $user = auth()->user();
+        $products = Product::where('collection_id', $collection->id)->get();
+        
+        return view('site.user.personal.collection-products', compact('user', 'products', 'collection'));
     }
 
     /**
