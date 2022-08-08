@@ -158,6 +158,7 @@ Route::group([
     Route::resource('brand', 'BrandController');
     // CRUD-операции над товарами каталога
     Route::resource('product', 'ProductController');
+    Route::resource('activity', 'ActivityController');
     // доп.маршрут для показа товаров категории
     Route::get('product/category/{category}', 'ProductController@category')
         ->name('product.category');

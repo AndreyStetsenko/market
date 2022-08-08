@@ -3,8 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Http\Traits\RecordsActivity;
 
 class Profile extends Model {
+
+    use RecordsActivity;
+
     protected $fillable = [
         'user_id',
         'title',

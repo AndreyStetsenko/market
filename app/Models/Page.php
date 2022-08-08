@@ -4,8 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Route;
+use App\Http\Traits\RecordsActivity;
 
 class Page extends Model {
+
+    use RecordsActivity;
 
     protected $fillable = [
         'name',

@@ -4,8 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
+use App\Http\Traits\RecordsActivity;
 
 class Order extends Model {
+
+    use RecordsActivity;
+
     protected $fillable = [
         'user_id',
         'slug',

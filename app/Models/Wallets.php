@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Http\Traits\RecordsActivity;
 
 class Wallets extends Model
 {
-    use HasFactory;
+    use HasFactory,
+        RecordsActivity;
 
     protected $fillable = [
         'user_id',
