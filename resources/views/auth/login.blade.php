@@ -11,28 +11,26 @@
                     
                     <div class="col-lg-4 offset-lg-4 wow fadeIn bg-color" data-wow-delay=".5s">
                         <div class="box-rounded padding40">
+                            @error('email')
+                                <span class="alert alert-danger d-block" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                            @error('password')
+                                <span class="alert alert-danger d-block" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                             <h3 class="mb10 mb-3">Авторизация</h3>
                             <form name="contactForm" id='contact_form' class="form-border" method="POST" action="{{ route('user.login') }}">
                                 @csrf
 
                                 <div class="field-set">
                                     <input type='text' name='email' id='email' class="form-control" placeholder="Имя пользователя / Email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                    @error('email')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
                                 </div>
                                 
                                 <div class="field-set">
                                     <input type='password' name='password' id='password' class="form-control" placeholder="Пароль" required autocomplete="current-password">
-
-                                    @error('password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
                                 </div>
 
                                 <div class="field-set mb-2">

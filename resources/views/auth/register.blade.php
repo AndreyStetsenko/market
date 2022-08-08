@@ -11,58 +11,59 @@
                     
                     <div class="col-lg-4 offset-lg-4 wow fadeIn bg-color" data-wow-delay=".5s">
                         <div class="box-rounded padding40">
+
+                            @error('name')
+                                <span class="alert alert-danger d-block" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+
+                            @error('email')
+                                <span class="alert alert-danger d-block" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+
+                            @error('username')
+                                <span class="alert alert-danger d-block" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+
+                            @error('password')
+                                <span class="alert alert-danger d-block" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+
+                            @error('usepassword-confirmrname')
+                                <span class="alert alert-danger d-block" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+
                             <h3 class="mb10 mb-3">{{ __('Register') }}</h3>
                             <form name="contactForm" id='contact_form' class="form-border" method="POST" action="{{ route('user.register') }}">
                                 @csrf
 
                                 <div class="field-set">
                                     <input type='text' name='name' id='name' class="form-control" placeholder="Имя, фамилия" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
-                                    @error('name')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
                                 </div>
 
                                 <div class="field-set">
                                     <input type='text' name='email' id='email' class="form-control" placeholder="Имя пользователя / Email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                    @error('email')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
                                 </div>
 
                                 <div class="field-set">
                                     <input type='text' name='username' id='username' class="form-control" placeholder="Имя пользователя" value="{{ old('username') }}" required autocomplete="username" autofocus>
-
-                                    @error('username')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
                                 </div>
 
                                 <div class="field-set">
                                     <input type='password' name='password' id='password' class="form-control" placeholder="Пароль" required autofocus>
-
-                                    @error('password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
                                 </div>
 
                                 <div class="field-set">
                                     <input type='password' name='password_confirmation' id='password-confirm' class="form-control" placeholder="Повторите пароль" required autofocus>
-
-                                    @error('usepassword-confirmrname')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
                                 </div>
                                 
                                 <div class="field-set">
