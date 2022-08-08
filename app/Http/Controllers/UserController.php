@@ -84,7 +84,9 @@ class UserController extends Controller {
      * Выбор создания коллекции или товара
      */
     public function option() {
-        return view('site.user.create-option');
+        $products = Product::where('creator_id', auth()->user()->id)->get();
+        $products_count = count($products);
+        return view('site.user.create-option', compact('products_count'));
     }
 }
 

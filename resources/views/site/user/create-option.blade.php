@@ -26,7 +26,12 @@
         <div class="row wow fadeIn">
             <div class="col-md-6 offset-md-3">
                 <p>Выберите "Товар" если у вас уже есть коллекция и вы хотите создать товар. Выберите "Коллекция" если вы хотите создать коллекцию для своих товаров</p>
-                <a href="{{ route('user.product.create') }}" class="opt-create">
+                <a href="{{ route('user.product.create') }}" class="opt-create" 
+                    @if ($products_count == 0)
+                    onclick="event.preventDefault();" style="opacity: 0.2" 
+                    data-bs-toggle="tooltip" data-bs-placement="right"
+                    data-bs-title="У вас нет ни одной коллекции для создания товара. Сначала создайте коллекцию"
+                    @endif>
                     <img src="{{ asset('site/images/misc/grey-coll-single.png') }}" alt="">
                     <h3>Товар</h3>
                 </a>
