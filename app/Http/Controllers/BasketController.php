@@ -150,12 +150,13 @@ class BasketController extends Controller {
      * Сообщение об успешном оформлении заказа
      */
     public function success(Request $request, $order) {
+        $status = Order::STATUSES;
         $order = Order::where('slug', $order)->firstOrFail();
         $order_id = $order->id;
 
         if ( auth()->check() ) {
             if ( $order->user_id == auth()->user()->id ) {
-                return view('site.user.basket.success', compact('order'));
+                return view('site.user.basket.success', compact('order', 'status'));
             } else {
                 return redirect()->route('basket.index');
             }
@@ -164,7 +165,7 @@ class BasketController extends Controller {
                 // сюда покупатель попадает сразу после оформления заказа
                 $order_id = $request->session()->pull('order_id');
                 $order = Order::findOrFail($order_id);
-                return view('site.user.basket.success', compact('order'));
+                return view('site.user.basket.success', compact('order', 'status'));
             } else {
                 // если покупатель попал сюда не после оформления заказа
                 return redirect()->route('basket.index');
