@@ -5,11 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Cookie;
-use App\Http\Traits\RecordsActivity;
 
 class Basket extends Model {
-
-    use RecordsActivity;
 
     /**
      * Связь «многие ко многим» таблицы `baskets` с таблицей `products`

@@ -5,11 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
-use App\Http\Traits\RecordsActivity;
 
 class Item extends Model {
-
-    use RecordsActivity;
 
     // https://stackoverflow.com/questions/25023790/set-default-database-dateformat-to-iso-8601-with-timezones-in-laravel
     //protected $dateFormat = 'Y-m-d H:i:s';

@@ -4,12 +4,9 @@ namespace App\Models;
 
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Model;
-use App\Http\Traits\RecordsActivity;
 
 class OrderItem extends Model
 {
-    use RecordsActivity;
-
     public $timestamps = false;
 
     protected $fillable = [

@@ -8,13 +8,10 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Laravel\Cashier\Billable;
-use App\Http\Traits\RecordsActivity;
 
 class User extends Authenticatable {
-    
     use Notifiable,
-        Billable,
-        RecordsActivity;
+        Billable;
 
     /**
      * The attributes that are mass assignable.

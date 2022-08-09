@@ -4,12 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Http\Traits\RecordsActivity;
 
 class Collection extends Model
 {
-    use HasFactory,
-        RecordsActivity;
+    use HasFactory;
 
     protected $fillable = [
         'user_id',

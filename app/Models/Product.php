@@ -6,12 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Stem\LinguaStemRu;
 use Cviebrock\EloquentSluggable\Sluggable;
-use App\Http\Traits\RecordsActivity;
 
 class Product extends Model {
 
-    use Sluggable,
-        RecordsActivity;
+    use Sluggable;
 
     protected $fillable = [
         'category_id',

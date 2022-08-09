@@ -3,11 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Http\Traits\RecordsActivity;
 
 class Category extends Model {
-    
-    use RecordsActivity;
 
     protected $fillable = [
         'parent_id',
