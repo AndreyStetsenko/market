@@ -117,6 +117,7 @@ Route::group([
     Route::post('update', 'UserController@update')->name('update');
     Route::get('personal', 'UserController@personal')->name('personal');
     Route::get('personal/collection/{collection}', 'UserController@collectionProducts')->name('personal.collection');
+    Route::get('personal/orders', 'UserController@orders')->name('personal.orders');
     Route::get('option/create', 'UserController@option')->name('create.option');
     // CRUD-операции над профилями пользователя
     Route::resource('profile', 'ProfileController');

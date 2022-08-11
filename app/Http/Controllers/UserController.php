@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Collection;
 use App\Models\Wallets;
 use App\Helpers\ImageSaver;
+use App\Models\Order;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller {
@@ -87,6 +88,16 @@ class UserController extends Controller {
         $products = Product::where('creator_id', auth()->user()->id)->get();
         $products_count = count($products);
         return view('site.user.create-option', compact('products_count'));
+    }
+
+    public function orders() {
+        $user = auth()->user();
+        $orders = Order::whereUserId($user->id)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+        $statuses = Order::STATUSES;
+
+        return view('site.user.personal.orders', compact('orders', 'statuses', 'user'));
     }
 }
 
