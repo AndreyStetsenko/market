@@ -6,6 +6,8 @@ use App\Models\Basket;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Coinremitter\Coinremitter;
+use Illuminate\Support\Facades\Http;
+use Onetoweb\NOWPayments\Client as NOWPaymentsClient;
 
 class BasketController extends Controller {
 
@@ -82,20 +84,6 @@ class BasketController extends Controller {
             'address' => 'required|max:255',
         ]);
 
-        // Создание инвоиса на Coinremitter
-        // $wallet = new Coinremitter($request->method);
-        // $param = [
-        //     'amount'=> $this->basket->getAmount(),      //required.
-        //     'notify_url'=> 'https://the3.cloud', //optional,url on which you wants to receive notification,
-        //     'fail_url' => route('basket.success'), //optional,url on which user will be redirect if user cancel invoice,
-        //     'suceess_url' => route('basket.success'), //optional,url on which user will be redirect when invoice paid,
-        //     'name'=>'',//optional,
-        //     'currency'=>'usd',//optional,
-        //     'expire_time'=>'30',//optional, invoice will expire in 30 minutes.
-        //     'description'=>'Test',//optional.
-        // ];
-        // $invoice  = $wallet->create_invoice($param);
-
         $n = 64;
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $randomString = '';
@@ -131,15 +119,6 @@ class BasketController extends Controller {
         // очищаем корзину
         $this->basket->clear();
 
-        // $result = [
-        //     'invoice_id'=>$order->invoice
-        // ];
-        // $invoice_result = $wallet->get_invoice($result);
-        // $redirect_url = $invoice_result['data']['url'];
-
-        // Редирект на мерчант
-        // return redirect($redirect_url);
-
         // Редирект на страницу подтверждения заказа
         return redirect()
             ->route('basket.success', $order->slug)
@@ -154,9 +133,15 @@ class BasketController extends Controller {
         $order = Order::where('slug', $order)->firstOrFail();
         $order_id = $order->id;
 
+        $resp_pay = Http::accept('application/json')->withHeaders([
+            'x-api-key' => env('NOWPAYMENT_API_KEY'),
+        ])->get( env('NOWPAYMENT_API_LINK') . '/v1/payment/' . $order->invoice);
+
+        // if ( $resp_pay->payment_status )
+
         if ( auth()->check() ) {
             if ( $order->user_id == auth()->user()->id ) {
-                return view('site.user.basket.success', compact('order', 'status'));
+                return view('site.user.basket.success', compact('order', 'status', 'resp_pay'));
             } else {
                 return redirect()->route('basket.index');
             }
@@ -165,7 +150,7 @@ class BasketController extends Controller {
                 // сюда покупатель попадает сразу после оформления заказа
                 $order_id = $request->session()->pull('order_id');
                 $order = Order::findOrFail($order_id);
-                return view('site.user.basket.success', compact('order', 'status'));
+                return view('site.user.basket.success', compact('order', 'status', 'resp_pay'));
             } else {
                 // если покупатель попал сюда не после оформления заказа
                 return redirect()->route('basket.index');
@@ -229,5 +214,90 @@ class BasketController extends Controller {
         $this->basket->delete();
         // выполняем редирект обратно на страницу корзины
         return redirect()->route('basket.index');
+    }
+
+    public function payment(Request $request) {
+        $response = Http::accept('application/json')->withHeaders([
+            'x-api-key' => env('NOWPAYMENT_API_KEY'),
+        ])->post( env('NOWPAYMENT_API_LINK') . '/v1/invoice', [
+            "price_amount" => $request->amount,
+            "price_currency" => "usd",
+            "order_id" => $request->id,
+            "ipn_callback_url" => env('NOWPAYMENT_WEBHOOK_URL'),
+            "success_url" => route('basket.pay.success', $request->id),
+            "cancel_url" => route('basket.pay.success', $request->id)
+        ]);
+
+        $resp = $response->json();
+
+        $order = Order::find($request->id);
+        $order->invoice = $resp['id'];
+        $order->update();
+
+        // dd($resp);
+        return redirect($resp['invoice_url']);
+    }
+
+    public function response(Request $request) {
+        // return response()->json($request);
+
+        $payment_status = 1;
+
+        switch ($request->payment_status) {
+            case 'waiting':
+                $payment_status = 1;
+                break;
+
+            case 'confirming':
+                $payment_status = 1;
+                break;
+
+            case 'confirmed':
+                $payment_status = 1;
+                break;
+
+            case 'sending':
+                $payment_status = 1;
+                break;
+
+            case 'partially_paid':
+                $payment_status = 1;
+                break;
+
+            case 'finished':
+                $payment_status = 2;
+                break;
+
+            case 'failed':
+                $payment_status = 6;
+                break;
+
+            case 'refunded':
+                $payment_status = 6;
+                break;
+
+            case 'expired':
+                $payment_status = 6;
+                break;
+            
+            default:
+                $payment_status = 1;
+                break;
+        }
+
+        $order = Order::find($request->order_id);
+        $order->status = $payment_status;
+        $order->invoice = $request->payment_id;
+        $order->update();
+    }
+
+    public function paySuccess($id) {
+        $order = Order::find($id);
+
+        return redirect()->route('basket.success', $order->slug);
+    }
+
+    public function cancel(Request $request) {
+        dd($request);
     }
 }

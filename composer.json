@@ -15,7 +15,7 @@
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
         "fzaninotto/faker": "^1.9.1",
-        "guzzlehttp/guzzle": "^7.2",
+        "guzzlehttp/guzzle": "^7.4",
         "intervention/image": "^2.5",
         "ladamalina/lingua-stem-ru": "dev-master",
         "laravel-lang/lang": "~7.0",
@@ -23,6 +23,7 @@
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",
+        "shakurov/coinbase": "^0.7.7",
         "victorybiz/laravel-crypto-payment-gateway": "^1.2"
     },
     "require-dev": {
@@ -44,7 +45,8 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "Onetoweb\\NOWPayments\\" : "src/"
         },
         "classmap": [
             "database/seeds",

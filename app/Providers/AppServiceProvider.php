@@ -24,7 +24,11 @@ class AppServiceProvider extends ServiceProvider {
      *
      * @return void
      */
-    public function boot() {
+    public function boot(\Illuminate\Http\Request $request) {
+        if (!empty( env('NGROK_URL') ) && $request->server->has('HTTP_X_ORIGINAL_HOST')) {
+            $this->app['url']->forceRootUrl(env('NGROK_URL'));
+        }
+        
         Blade::directive('icon', function($expression) {
             $name = str_replace("'", '', $expression);
             return '<i class="fas fa-' . $name . '"></i>';

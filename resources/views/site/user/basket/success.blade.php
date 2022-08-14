@@ -57,6 +57,17 @@
 
 
             <div class="col-lg-4 mb30">
+                {{-- @if (isset($resp_pay['payment_status']))
+                    @if ($resp_pay['payment_status'] == 'finished')
+                        <div class="alert alert-success">
+                            Заказ успешно оплачен
+                        </div>
+                    @else
+                        <div class="alert alert-warning">
+                            Ожидание оплаты
+                        </div>
+                    @endif
+                @endif --}}
                 <div class="box-url mb-2">
                     <h4>Ваши данные</h4>
                     <p>Имя, фамилия: {{ $order->name }}</p>
@@ -69,7 +80,17 @@
                 </div>
                 
                 @if ($order->status == 0)
-                <a href="" class="btn-main mt-4 float-end"><span>Оплатить</span></a>
+
+                <form action="{{ route('basket.payment') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="id" value="{{ $order->id }}">
+                    <input type="hidden" name="slug" value="{{ $order->slug }}">
+                    <input type="hidden" name="amount" value="{{ $order->amount }}">
+                    <input type="hidden" name="email" value="{{ $order->email }}">
+
+                    <button class="btn-main mt-4 float-end"><span>Оплатить</span></button>
+                </form>
+
                 @endif
             </div>
 

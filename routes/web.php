@@ -72,6 +72,14 @@ Route::group([
     // страница после успешного сохранения заказа в БД
     Route::get('success/{order}', 'BasketController@success')
         ->name('success');
+    Route::post('order/pay', 'BasketController@payment')
+        ->name('payment');
+    Route::post('order/pay/response', 'BasketController@response')
+        ->name('pay.response');
+    Route::get('order/pay/success/{id}', 'BasketController@paySuccess')
+        ->name('pay.success');
+    Route::get('order/pay/cancel', 'BasketController@cancel')
+        ->name('pay.cancel');
     // страница ошибки заказа
     Route::get('fail', 'BasketController@fail')
         ->name('fail');
