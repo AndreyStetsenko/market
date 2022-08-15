@@ -31,8 +31,8 @@
                                 <h4>
                                     {{ $collection->name }}
                                     <div class="clearfix"></div>
-                                    <span id="wallet" class="profile_wallet">{{ $collection->user->wallet->where('currency', 'usdt')->first()->wallet ?? '' }}</span>
-                                    <button id="btn_copy" title="Copy Text">Copy</button>
+                                    {{-- <span id="wallet" class="profile_wallet">{{ $collection->user->wallet->where('currency', 'usdt')->first()->wallet ?? '' }}</span> --}}
+                                    {{-- <button id="btn_copy" title="Copy Text">Copy</button> --}}
                                 </h4>
                             </div>
                         </div>
