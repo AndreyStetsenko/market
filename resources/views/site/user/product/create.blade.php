@@ -57,7 +57,7 @@
 
                         <div class="spacer-20"></div>
 
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <!-- новинка -->
                             <div class="form-check form-check-inline">
                                 @php
@@ -93,7 +93,7 @@
                             </div>
                         </div>
 
-                        <div class="spacer-20"></div>
+                        <div class="spacer-20"></div> --}}
 
                         <h5>Категория</h5>
                         <div class="form-group">
