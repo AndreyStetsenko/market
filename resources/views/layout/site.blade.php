@@ -63,7 +63,7 @@
                     @endif
                 @else
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('user.index') }}">Личный кабинет</a>
+                        <a class="nav-link" href="{{ route('user.personal') }}">Личный кабинет</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('user.product.index') }}">Мои товары</a>

@@ -20,7 +20,7 @@ class RedirectIfAuthenticated
     {
         if (Auth::guard($guard)->check()) {
             // return redirect(RouteServiceProvider::HOME);
-            return redirect()->route('user.index');
+            return redirect()->route('user.personal');
         }
 
         return $next($request);
