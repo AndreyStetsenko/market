@@ -42,19 +42,21 @@ class UserController extends Controller {
 
     public function update(Request $request) {
         $user = User::find(auth()->user()->id);
-        $wallet = Wallets::where('user_id', auth()->user()->id)->get();
-        if (count($wallet) < 1) {
-            $wallet = new Wallets();
-            $wallet->user_id = auth()->user()->id;
-            $wallet->currency = 'usdt';
-            $wallet->balance = '0';
-            $wallet->wallet = $request->wallet;
-            $wallet->save();
-        } else {
-            $wallet = Wallets::where([['user_id', auth()->user()->id], ['currency', 'usdt']])->first();
-            $wallet->wallet = $request->wallet;
-            $wallet->update();
-        }
+        // $wallet = Wallets::where('user_id', auth()->user()->id)->get();
+        // if (count($wallet) < 1) {
+        //     $wallet = new Wallets();
+        //     $wallet->user_id = auth()->user()->id;
+        //     $wallet->currency = 'usdt';
+        //     $wallet->balance = '0';
+        //     $wallet->wallet = $request->wallet;
+        //     $wallet->save();
+        // } else {
+        //     $wallet = Wallets::where([['user_id', auth()->user()->id], ['currency', 'usdt']])->first();
+        //     $wallet->wallet = $request->wallet;
+        //     $wallet->update();
+        // }
+        $user->phone = $request->input('phone');
+        $user->telegram = $request->input('telegram');
         $user->name = $request->input('name');
         $user->email = $request->input('email');
         $user->username = $request->input('username');
@@ -69,9 +71,16 @@ class UserController extends Controller {
 
     public function personal() {
         $user = auth()->user();
+        $products = Product::where('creator_id', $user->id)->get();
+        
+        return view('site.user.personal.index', compact('user', 'products'));
+    }
+
+    public function collections() {
+        $user = auth()->user();
         $collections = Collection::where('user_id', $user->id)->get();
         
-        return view('site.user.personal.index', compact('user', 'collections'));
+        return view('site.user.personal.collections', compact('user', 'collections'));
     }
 
     public function collectionProducts(Collection $collection) {
@@ -85,9 +94,9 @@ class UserController extends Controller {
      * Выбор создания коллекции или товара
      */
     public function option() {
-        $products = Product::where('creator_id', auth()->user()->id)->get();
-        $products_count = count($products);
-        return view('site.user.create-option', compact('products_count'));
+        $collections = Collection::where('user_id', auth()->user()->id)->get();
+        $collection_count = count($collections);
+        return view('site.user.create-option', compact('collection_count'));
     }
 
     public function orders() {

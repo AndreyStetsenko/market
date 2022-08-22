@@ -124,6 +124,7 @@ Route::group([
     Route::get('edit', 'UserController@edit')->name('edit');
     Route::post('update', 'UserController@update')->name('update');
     Route::get('personal', 'UserController@personal')->name('personal');
+    Route::get('personal/collections', 'UserController@collections')->name('personal.collections');
     Route::get('personal/collection/{collection}', 'UserController@collectionProducts')->name('personal.collection');
     Route::get('personal/orders', 'UserController@orders')->name('personal.orders');
     Route::get('option/create', 'UserController@option')->name('create.option');

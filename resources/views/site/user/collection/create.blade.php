@@ -32,13 +32,13 @@
                     <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
 
                     <div class="field-set">
-                        <h5>Загрузить изображение</h5>
+                        <h5>Загрузить изображение *</h5>
 
                         <div class="d-create-file">
                             <p id="file_name">PNG, JPG, JPEG</p>
                             <input type="button" id="get_file" class="btn-main" value="Browse">
                             <input type="file" class="form-control-file" id="upload_file" 
-                                    name="image" accept="image/png, image/jpeg, image/jpg">
+                                    name="image" accept="image/png, image/jpeg, image/jpg image/webp" required>
                         </div>
 
                         <div class="spacer-40"></div>

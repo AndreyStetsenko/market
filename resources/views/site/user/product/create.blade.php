@@ -34,24 +34,24 @@
                     <input type="hidden" name="brand_id" value="1">
 
                     <div class="field-set">
-                        <h5>Загрузить изображение</h5>
+                        <h5>Загрузить изображение *</h5>
 
                         <div class="d-create-file">
                             <p id="file_name">PNG, JPG, JPEG</p>
                             <input type="button" id="get_file" class="btn-main" value="Browse">
                             <input type="file" class="form-control-file" id="upload_file" 
-                                    name="image" accept="image/png, image/jpeg, image/jpg">
+                                    name="image" accept="image/png, image/jpeg, image/jpg image/webp" required>
                         </div>
 
                         <div class="spacer-40"></div>
 
-                        <h5>Название</h5>
+                        <h5>Название *</h5>
                         <input type="text" name="name" id="name" class="form-control" placeholder="e.g. 'Crypto Funk"
                                 required maxlength="100" value="{{ old('name') ?? $product->name ?? '' }}" />
 
                         <div class="spacer-20"></div>
 
-                        <h5>Цена</h5>
+                        <h5>Цена *</h5>
                         <input type="text" name="price" id="price" class="form-control" placeholder="25.00 $" 
                                 required value="{{ old('price') ?? $product->price ?? '' }}"/>
 
@@ -95,7 +95,7 @@
 
                         <div class="spacer-20"></div> --}}
 
-                        <h5>Категория</h5>
+                        <h5>Категория *</h5>
                         <div class="form-group">
                             @php
                                 $category_id = old('category_id') ?? $product->category_id ?? 0;
@@ -113,7 +113,7 @@
                         <h5>Коллекция</h5>
                         <div class="form-group">
                             <select name="collection_id" class="form-control" title="Коллекция">
-                                <option value="0">Выберите</option>
+                                <option value="">Выберите</option>
                                 @foreach($collections as $collection)
                                     <option value="{{ $collection->id }}">
                                         {{ $collection->name }}

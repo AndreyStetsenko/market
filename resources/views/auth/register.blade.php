@@ -51,7 +51,7 @@
                                 </div>
 
                                 <div class="field-set">
-                                    <input type='text' name='email' id='email' class="form-control" placeholder="Имя пользователя / Email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                    <input type='text' name='email' id='email' class="form-control" placeholder="Email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                                 </div>
 
                                 <div class="field-set">

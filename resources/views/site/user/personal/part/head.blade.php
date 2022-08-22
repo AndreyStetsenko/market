@@ -13,9 +13,8 @@
                     <h4>
                         {{ $user->name }}
                         <span class="profile_username">{{ $user->username != null ? '@' . $user->username : '' }}</span>
-                        <span id="wallet_personal" class="profile_wallet">{{ $user->wallet->first()->wallet ?? '' }}</span>
-                        <button id="btn_copy" title="Copy Text" class="ms-2" onclick="">Copy</button>
-                    </h4>
+                        @if ($user->telegram) <span class="fs-6 text-muted">Telegram: <a href="https://t.me/{{ $user->telegram }}">{{ $user->telegram }}</a></span><br> @endif
+                        @if ($user->phone) <span class="fs-6 text-muted">Телефон: <a href="tel:{{ $user->phone }}">{{ $user->phone }}</a></span> @endif
                 </div>
             </div>
         </div>

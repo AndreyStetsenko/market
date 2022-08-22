@@ -57,9 +57,19 @@
 
                                             <div class="spacer-20"></div>
 
-                                            <h5>Кошелек USDT</h5>
+                                            {{-- <h5>Кошелек USDT</h5>
                                             <input type="text" name="wallet" id="wallet" class="form-control" 
-                                                    placeholder="Wallet" value="{{ $user->wallet[0]->wallet ?? '' }}" />
+                                                    placeholder="Wallet" value="{{ $user->wallet[0]->wallet ?? '' }}" /> --}}
+
+                                            <h5>Telegram</h5>
+                                            <input type="text" name="telegram" id="telegram" class="form-control" 
+                                                    placeholder="Telegram" value="{{ $user->telegram ?? '' }}" />
+
+                                            <div class="spacer-20"></div>
+
+                                            <h5>Номер телефона</h5>
+                                            <input type="text" name="phone" id="phone" class="form-control" 
+                                                    placeholder="Phone" value="{{ $user->phone ?? '' }}" />
 
                                         </div>
                                 </div>

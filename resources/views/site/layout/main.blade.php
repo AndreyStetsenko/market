@@ -36,6 +36,6 @@
     <script src="{{ asset('site/js/particles.js') }}"></script>
     <script src="{{ asset('site/js/particles-settings.js') }}"></script>
     @endif
-
+    {{-- <script src="{{ asset('site/assets/js/app.js') }}"></script> --}}
 </body>
 </html>

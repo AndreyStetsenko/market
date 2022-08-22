@@ -42,10 +42,6 @@ class ProductCatalogRequest extends CatalogRequest {
                 'integer',
                 'min:1'
             ],
-            'collection_id' => [
-                'integer',
-                'min:1'
-            ],
             'price' => [
                 'required',
                 'numeric',
@@ -63,10 +59,6 @@ class ProductCatalogRequest extends CatalogRequest {
         $rules = [
             'category_id' => [
                 'required',
-                'integer',
-                'min:1'
-            ],
-            'collection_id' => [
                 'integer',
                 'min:1'
             ],

@@ -1,6 +1,7 @@
 <div class="col-12">
     <ul class="de_nav">
-        <li class="{{ request()->routeIs('user.personal') ? 'active' : '' }}"><a href="{{ route('user.personal') }}"><span>Мои коллекции</span></a></li>
+        <li class="{{ request()->routeIs('user.personal') ? 'active' : '' }}"><a href="{{ route('user.personal') }}"><span>Мои товары</span></a></li>
+        <li class="{{ request()->routeIs('user.personal.collections') ? 'active' : '' }}"><a href="{{ route('user.personal.collections') }}"><span>Мои коллекции</span></a></li>
         <li class="{{ request()->routeIs('user.personal.orders') ? 'active' : '' }}"><a href="{{ route('user.personal.orders') }}"><span>Мои заказы</span></a></li>
         <li class="{{ request()->routeIs('user.edit') ? 'active' : '' }}"><a href="{{ route('user.edit') }}"><span>Редактировать профиль</span></a></li>
         <li>
@@ -10,6 +11,8 @@
             </form>
         </li>
         @if ( request()->routeIs('user.personal') )
+        <li class="float-end active"><a href="{{ route('user.product.create') }}"><span>Создать товар</span></a></li>
+        @elseif ( request()->routeIs('user.personal.collections') )
         <li class="float-end active"><a href="{{ route('user.collection.create') }}"><span>Создать коллекцию</span></a></li>
         @elseif ( request()->routeIs('user.personal.collection') )
         <li class="float-end active"><a href="{{ route('user.product.create') }}"><span>Создать товар</span></a></li>
