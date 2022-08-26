@@ -1,4 +1,5 @@
-import ProductCreateValidate from './productCreateValidate';
+// import ProductCreateValidate from './productCreateValidate';
+import ProductCountBasket from './productCountBasket';
 
 export default class Main {
     constructor() {
@@ -8,7 +9,8 @@ export default class Main {
         this.bindEvents();
     }
     bindEvents() {
-        new ProductCreateValidate();
+        // new ProductCreateValidate();
+        new ProductCountBasket();
     }
 }
 

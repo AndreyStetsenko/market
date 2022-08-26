@@ -12,6 +12,7 @@ use App\Models\Collection;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Basket;
 
 class ProductController extends Controller
 {
@@ -19,6 +20,7 @@ class ProductController extends Controller
 
     public function __construct(ImageSaver $imageSaver) {
         $this->imageSaver = $imageSaver;
+        $this->basket = Basket::getBasket();
     }
 
     /**
@@ -96,7 +98,8 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Product $product) {
-        return view('user.product.show', compact('product'));
+        $product_basket = $products = $this->basket->products->find($product->id);
+        return view('user.product.show', compact('product', 'product_basket'));
     }
 
     /**

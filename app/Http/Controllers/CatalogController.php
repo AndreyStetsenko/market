@@ -6,9 +6,17 @@ use App\Helpers\ProductFilter;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Basket;
 use Illuminate\Http\Request;
 
 class CatalogController extends Controller {
+
+    private $basket;
+
+    public function __construct() {
+        $this->basket = Basket::getBasket();
+    }
+    
     public function index() {
         $products = Product::paginate(20);
         $roots = Category::where('parent_id', 0)->get();
@@ -39,7 +47,9 @@ class CatalogController extends Controller {
             ['id', '!=', $product->id]
             ])->paginate(6);
 
-        return view('site.catalog.product', compact('product', 'products'));
+        $product_basket = $this->basket->products->find($product->id);
+
+        return view('site.catalog.product', compact('product', 'products', 'product_basket'));
     }
 
     public function search(Request $request) {

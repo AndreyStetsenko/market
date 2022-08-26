@@ -47,13 +47,13 @@
 
                         <h5>Название *</h5>
                         <input type="text" name="name" id="name" class="form-control" placeholder="e.g. 'Crypto Funk"
-                                required maxlength="100" value="{{ old('name') ?? $product->name ?? '' }}" />
+                                required maxlength="100" value="{{ old('name') ?? $product->name ?? '' }}" maxlength="25" />
 
                         <div class="spacer-20"></div>
 
                         <h5>Цена *</h5>
                         <input type="text" name="price" id="price" class="form-control" placeholder="25.00 $" 
-                                required value="{{ old('price') ?? $product->price ?? '' }}"/>
+                                required value="{{ old('price') ?? $product->price ?? '' }}" maxlength="10"/>
 
                         <div class="spacer-20"></div>
 
@@ -100,8 +100,8 @@
                             @php
                                 $category_id = old('category_id') ?? $product->category_id ?? 0;
                             @endphp
-                            <select name="category_id" class="form-control" title="Категория">
-                                <option value="0">Выберите</option>
+                            <select name="category_id" class="form-control" title="Категория" required>
+                                <option value="">Выберите</option>
                                 @if (count($items))
                                     @include('admin.product.part.branch', ['level' => -1, 'parent' => 0])
                                 @endif

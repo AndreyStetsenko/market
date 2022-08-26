@@ -19,7 +19,7 @@
                 <th></th>
             </tr>
             @foreach($products as $product)
-                <tr>
+                <tr class="basket-product-item">
                     <td>{{ $loop->iteration }}</td>
                     <td>
                         <a href="{{ route('catalog.product', ['product' => $product->slug]) }}">
@@ -29,15 +29,15 @@
                     <td>{{ number_format($product->price, 2, '.', '') }}</td>
                     <td>
                         <form action="{{ route('basket.minus', ['id' => $product->id]) }}"
-                              method="post" class="d-inline">
+                              method="post" class="d-inline product-basket-minus">
                             @csrf
                             <button type="submit" class="m-0 p-0 border-0 bg-transparent">
                                 <i class="fas fa-minus-square"></i>
                             </button>
                         </form>
-                        <span class="mx-1">{{ $product->pivot->quantity }}</span>
+                        <span class="mx-1 product-basket-count">{{ $product->pivot->quantity }}</span>
                         <form action="{{ route('basket.plus', ['id' => $product->id]) }}"
-                              method="post" class="d-inline">
+                              method="post" class="d-inline product-basket-plus">
                             @csrf
                             <button type="submit" class="m-0 p-0 border-0 bg-transparent">
                                 <i class="fas fa-plus-square"></i>

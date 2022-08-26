@@ -89,6 +89,12 @@
                         <button type="submit" class="btn-main btn-lg d-block">
                             Добавить в корзину
                         </button>
+
+                        @if ( $product_basket )
+                        <button onclick="window.location.href = '{{ route('basket.index') }}'" type="button" class="btn-main btn-lg d-block mt-3">
+                            Перейти в корзину
+                        </button>
+                        @endif
                     </form>
                     
                 </div>
