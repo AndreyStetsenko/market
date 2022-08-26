@@ -13920,6 +13920,10 @@ a.read_more i {
     display: flex;
 }
 
+#nft-item-details .nft-image-wrapper img{
+    width: 100%;
+}
+
 #nft-item-details audio{
     position: absolute;
     width: 95%;

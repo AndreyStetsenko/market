@@ -15,6 +15,8 @@
     <!-- color scheme -->   
     <link id="colors" href="{{ asset('site/css/colors/scheme-01.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('site/css/coloring.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="//cdn.quilljs.com/1.3.6/quill.bubble.css">
+    <link rel="stylesheet" href="//cdn.quilljs.com/1.3.6/quill.snow.css">
 </head>
 <body class="dark-scheme de-grey">
 
@@ -36,6 +38,9 @@
     <script src="{{ asset('site/js/particles.js') }}"></script>
     <script src="{{ asset('site/js/particles-settings.js') }}"></script>
     @endif
+    {{-- <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script> --}}
     {{-- <script src="{{ asset('site/assets/js/app.js') }}"></script> --}}
+
+    @stack('scripts')
 </body>
 </html>

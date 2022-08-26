@@ -143,6 +143,7 @@
 
                         <h5>Описание</h5>
                         <textarea data-autoresize name="content" id="item_desc" class="form-control" placeholder="e.g. 'This is very limited item'">{{ old('content') ?? $product->content ?? '' }}</textarea>
+                        {{-- <div id="item_desc">{{ old('content') ?? $product->content ?? '' }}</div> --}}
 
                         <div class="spacer-20"></div>
 
@@ -191,3 +192,20 @@
 </section>
 
 @endsection
+
+@push('scripts')
+{{-- <script>
+    const item_desc = $('#item_desc');
+
+    var quill = new Quill('#item_desc', {
+        modules: {
+            toolbar: [
+                [{ header: [1, 2, false] }],
+                ['bold', 'italic', 'underline']
+            ]
+        },
+        placeholder: "Введите описание товара..",
+        theme: 'bubble'  // or 'bubble'
+    });
+</script> --}}
+@endpush
