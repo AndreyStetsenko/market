@@ -2118,11 +2118,13 @@
 		
      });
 
+     $('#product-create-preview').find('.product-preview-name').text( $('#product-create input[name="name"]').val() );
      $('#product-create input[name="name"]').on('input', function() {
         $('#product-create-preview').find('.product-preview-name').text( $(this).val() );
      });
 
-     $('#product-create input[name="price"]').on('input', function() {
+     $('#product-create-preview').find('.nft__item_price span').text( $('#product-create input[name="price"]').val() );
+     $('#product-create input[name="price"]').on('change', function() {
         $('#product-create-preview').find('.nft__item_price span').text( $(this).val() );
      });
 

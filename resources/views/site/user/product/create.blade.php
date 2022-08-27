@@ -26,34 +26,54 @@
     <div class="container">
         <div class="row wow fadeIn">
             <div class="col-lg-7 offset-lg-1">
-                <form id="product-create" class="form-border" method="post" action="{{ route('user.product.store') }}" enctype="multipart/form-data">
+                <form id="product-create" class="form-border form-product-create" method="post" action="{{ route('user.product.store') }}" enctype="multipart/form-data">
                     @csrf
 
                     <input type="hidden" name="creator_id" value="{{ auth()->user()->id }}">
                     <input type="hidden" name="slug" value="{{ $slug }}">
                     <input type="hidden" name="brand_id" value="1">
+                    <input type="hidden" id="check_img" value="1">
 
                     <div class="field-set">
-                        <h5>Загрузить изображение *</h5>
+                        {{-- <h5>Загрузить изображение *</h5>
 
-                        <div class="d-create-file">
+                        <div class="form-group d-create-file">
                             <p id="file_name">PNG, JPG, JPEG</p>
-                            <input type="button" id="get_file" class="btn-main" value="Browse">
-                            <input type="file" class="form-control-file" id="upload_file" 
+                            <input type="button" id="get_file" class="btn-main" name="get_file" value="Browse">
+                            <input type="file" class="form-control" id="upload_file" 
                                     name="image" accept="image/png, image/jpeg, image/jpg image/webp" required>
+                            <div class="input-error"></div>
+                        </div> --}}
+
+                        <div class="spacer-40"></div>
+                        
+                        <div class="form-group">
+                            <h5>Загрузить изображение *</h5>
+                            <ul id="file_name" class="text-muted fs-6 mt-2 mb-2 d-block list">PNG, JPG, JPEG</ul>
+                            <button type="button" class="btn-load-img" id="load-img">Загрузить изображение</button>
+                            <div class="input-error input-error-image"></div>
+                            <input type="file" class="form-control" id="image" 
+                                name="image" accept="image/png, image/jpeg, image/jpg image/webp" required multiple style="opacity: 0; margin: 0; padding: 0; height: 0;">
                         </div>
 
                         <div class="spacer-40"></div>
 
-                        <h5>Название *</h5>
-                        <input type="text" name="name" id="name" class="form-control" placeholder="e.g. 'Crypto Funk"
+                        <div class="form-group">
+                            <h5>Название *</h5>
+                            <input type="text" name="name" id="name" class="form-control" placeholder="e.g. 'Crypto Funk"
                                 required maxlength="100" value="{{ old('name') ?? $product->name ?? '' }}" maxlength="25" />
+                            <div class="input-error"></div>
+                        </div>
 
                         <div class="spacer-20"></div>
 
-                        <h5>Цена *</h5>
-                        <input type="text" name="price" id="price" class="form-control" placeholder="25.00 $" 
-                                required value="{{ old('price') ?? $product->price ?? '' }}" maxlength="10"/>
+                        <div class="form-group price">
+                            <h5>Цена *</h5>
+                            <input type="text" name="price" id="price" class="form-control" placeholder="25.00 $" 
+                                    required value="{{ old('price') ?? $product->price ?? '' }}" />
+                            <div class="el-price">$</div>
+                            <div class="input-error"></div>
+                        </div>
 
                         <div class="spacer-20"></div>
 
@@ -95,24 +115,25 @@
 
                         <div class="spacer-20"></div> --}}
 
-                        <h5>Категория *</h5>
                         <div class="form-group">
+                            <h5>Категория *</h5>
                             @php
                                 $category_id = old('category_id') ?? $product->category_id ?? 0;
                             @endphp
-                            <select name="category_id" class="form-control" title="Категория" required>
+                            <select name="category_id" id="category_id" class="form-control" title="Категория" required>
                                 <option value="">Выберите</option>
                                 @if (count($items))
                                     @include('admin.product.part.branch', ['level' => -1, 'parent' => 0])
                                 @endif
                             </select>
+                            <div class="input-error"></div>
                         </div>
 
                         <div class="spacer-20"></div>
 
-                        <h5>Коллекция</h5>
                         <div class="form-group">
-                            <select name="collection_id" class="form-control" title="Коллекция">
+                            <h5>Коллекция</h5>
+                            <select name="collection_id" id="collection_id" class="form-control" title="Коллекция">
                                 <option value="">Выберите</option>
                                 @foreach($collections as $collection)
                                     <option value="{{ $collection->id }}">
@@ -120,6 +141,7 @@
                                     </option>
                                 @endforeach
                             </select>
+                            <div class="input-error"></div>
                         </div>
 
                         <div class="spacer-20"></div>
@@ -141,13 +163,16 @@
 
                         <div class="spacer-20"></div> --}}
 
-                        <h5>Описание</h5>
-                        <textarea data-autoresize name="content" id="item_desc" class="form-control" placeholder="e.g. 'This is very limited item'">{{ old('content') ?? $product->content ?? '' }}</textarea>
-                        {{-- <div id="item_desc">{{ old('content') ?? $product->content ?? '' }}</div> --}}
+                        <div class="form-group">
+                            <h5>Описание</h5>
+                            <textarea data-autoresize name="content" id="item_desc" class="form-control" placeholder="e.g. 'This is very limited item'">{{ old('content') ?? $product->content ?? '' }}</textarea>
+                            <div class="input-error"></div>
+                        </div>
 
                         <div class="spacer-20"></div>
 
-                        <input type="submit" id="submit" class="btn-main" value="Создать">
+                        {{-- <input type="submit" id="submit" class="btn-main" value="Создать"> --}}
+                        <button type="submit" id="submit" class="btn-main">Создать</button>
                         <div class="spacer-single"></div>
                     </div>
                 </form>

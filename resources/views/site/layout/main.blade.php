@@ -17,6 +17,8 @@
     <link href="{{ asset('site/css/coloring.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="//cdn.quilljs.com/1.3.6/quill.bubble.css">
     <link rel="stylesheet" href="//cdn.quilljs.com/1.3.6/quill.snow.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.0.1/min/dropzone.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('site/assets/style.css') }}">
 </head>
 <body class="dark-scheme de-grey">
 
@@ -38,8 +40,10 @@
     <script src="{{ asset('site/js/particles.js') }}"></script>
     <script src="{{ asset('site/js/particles-settings.js') }}"></script>
     @endif
-    {{-- <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script> --}}
-    <script src="{{ asset('site/assets/js/app.js') }}"></script>
+    {{-- <script src="{{ asset('site/assets/vendor/jquery-3.4.0/jquery-3.4.0.min.js') }}"></script> --}}
+    {{-- <script src="{{ asset('site/assets/vendor/validate/jquery.validate.min.js') }}"></script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.2.0/min/dropzone.min.js"></script>
+    <script src="{{ asset('site/assets/js.bundle.js') }}"></script>
 
     @stack('scripts')
 </body>

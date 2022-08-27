@@ -1,0 +1,15 @@
+.btn {
+    &-load-img {
+        padding: 5px 12px;
+        border-radius: 4px;
+        border: none;
+        background: var(--secondary-color);
+        color: #fff;
+        font-size: 16px;
+        transition: .2s;
+
+        &:hover {
+            background: #6e47e4;
+        }
+    }
+}
