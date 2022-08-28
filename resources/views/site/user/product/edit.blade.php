@@ -26,7 +26,10 @@
     <div class="container">
         <div class="row wow fadeIn">
             <div class="col-lg-7 offset-lg-1">
-                <form id="product-create" class="form-border" method="post" action="{{ route('user.product.update', $product->id) }}" enctype="multipart/form-data">
+                <form id="product-create" class="form-border" method="post" action="{{ route('user.product.update', $product->id) }}" 
+                        enctype="multipart/form-data"
+                        data-formtype="product" 
+                        data-formaction="edit">
                     @method('PUT')
                     @csrf
 

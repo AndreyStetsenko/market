@@ -26,15 +26,29 @@ export default class productCreateValidate {
     }
     validate() {
         const { currentForm } = this;
-        // const submit = document.getElementById('submit');
+
+        const formType = 'data-formtype';
+        const formAction = 'data-formaction';
+        const formTypeProduct = 'product';
+        const formTypeCollection = 'collection';
+        const formActionCreate = 'create';
+        // const formActionEdit = 'edit';
 
         const inpRequired = 'Это поле обязательно для заполнения';
         const inpLength = 'Введите от 3 до 50 символов';
         const inpLengthPrice = 'Введите сумму до 999999 USD';
         const setCategory = 'Выберите категорию';
         const setDescription = 'Введите описание товара';
-        const setImage = 'Добавьте изображение товара';
+        const setSlug = 'Поле slug не может быть пустым';
         // const fileImage = 'Загрузите изображение';
+
+        let setImage = 'Добавьте изображение';
+
+        if ($(currentForm).attr(formType) === formTypeProduct) {
+            setImage = 'Добавьте изображение товара';
+        } else if ($(currentForm).attr(formType) === formTypeCollection) {
+            setImage = 'Добавьте изображение коллекции';
+        }
 
         $(currentForm).validate({
             debug: false,
@@ -57,13 +71,18 @@ export default class productCreateValidate {
                     required: true
                 },
                 content: {
-                    required: true
+                    required: {
+                        param: true,
+                        depends() {
+                            return $(currentForm).attr(formType) === formTypeProduct;
+                        }
+                    }
                 },
                 image: {
                     required: {
                         param: true,
                         depends() {
-                            return $('#check_img').val() === '1';
+                            return $(currentForm).attr(formAction) === formActionCreate;
                         }
                     }
                 }
@@ -85,13 +104,12 @@ export default class productCreateValidate {
                 },
                 image: {
                     required: setImage
+                },
+                slug: {
+                    required: setSlug
                 }
             }
         });
-
-        // $(currentForm).validate({
-
-        // });
     }
     mask() {
         $(this.name).mask('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', {

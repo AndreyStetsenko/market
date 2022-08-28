@@ -26,37 +26,40 @@
     <div class="container">
         <div class="row wow fadeIn">
             <div class="col-lg-7 offset-lg-1">
-                <form id="product-create" class="form-border" method="post" action="{{ route('user.collection.store') }}" enctype="multipart/form-data">
+                <form id="product-create" class="form-border" method="post" action="{{ route('user.collection.store') }}" 
+                        enctype="multipart/form-data" 
+                        data-formtype="collection" 
+                        data-formaction="create">
                     @csrf
 
                     <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
 
                     <div class="field-set">
-                        <h5>Загрузить изображение *</h5>
-
-                        <div class="d-create-file">
-                            <p id="file_name">PNG, JPG, JPEG</p>
-                            <input type="button" id="get_file" class="btn-main" value="Browse">
-                            <input type="file" class="form-control-file" id="upload_file" 
-                                    name="image" accept="image/png, image/jpeg, image/jpg image/webp" required>
+                        <div class="form-group">
+                            <h5>Загрузить изображение *</h5>
+                            <ul id="file_name" class="text-muted fs-6 mt-2 mb-2 d-block list">PNG, JPG, JPEG</ul>
+                            <button type="button" class="btn-load-img" id="load-img">Загрузить изображение</button>
+                            <div class="input-error input-error-image"></div>
+                            <input type="file" class="form-control" id="image" 
+                                name="image" accept="image/png, image/jpeg, image/jpg image/webp" required multiple style="opacity: 0; margin: 0; padding: 0; height: 0;">
                         </div>
 
                         <div class="spacer-40"></div>
 
-                        <h5>Название</h5>
-                        <input type="text" name="name" id="name" class="form-control" placeholder="e.g. 'Crypto Funk"
-                                required maxlength="100" value="{{ old('name') ?? $collection->name ?? '' }}" />
+                        <div class="form-group">
+                            <h5>Название</h5>
+                            <input type="text" name="name" id="name" class="form-control" placeholder="e.g. 'Crypto Funk"
+                                    required maxlength="100" value="{{ old('name') ?? $collection->name ?? '' }}" data-transl="from" />
+                            <div class="input-error input-error-image"></div>
+                        </div>
 
                         <div class="spacer-20"></div>
 
-                        <h5>Название на английском</h5>
-                        <input type="text" name="slug" id="slug" class="form-control" placeholder="e.g. 'Crypto Funk"
-                                required maxlength="100" value="{{ old('slug') ?? $collection->slug ?? '' }}" />
-
-                        <div class="spacer-20"></div>
-
-                        <h5>Описание</h5>
-                        <textarea data-autoresize name="content" id="item_desc" class="form-control" placeholder="e.g. 'This is very limited item'">{{ old('content') ?? $collection->content ?? '' }}</textarea>
+                        <div class="form-group">
+                            <h5>Описание</h5>
+                            <textarea data-autoresize name="content" id="item_desc" class="form-control" placeholder="e.g. 'This is very limited item'">{{ old('content') ?? $collection->content ?? '' }}</textarea>
+                            <div class="input-error input-error-image"></div>
+                        </div>
 
                         <div class="spacer-20"></div>
 

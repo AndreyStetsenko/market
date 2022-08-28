@@ -26,7 +26,10 @@
     <div class="container">
         <div class="row wow fadeIn">
             <div class="col-lg-7 offset-lg-1">
-                <form id="product-create" class="form-border form-product-create" method="post" action="{{ route('user.product.store') }}" enctype="multipart/form-data">
+                <form id="product-create" class="form-border form-product-create" method="post" action="{{ route('user.product.store') }}" 
+                        enctype="multipart/form-data"
+                        data-formtype="product" 
+                        data-formaction="create">
                     @csrf
 
                     <input type="hidden" name="creator_id" value="{{ auth()->user()->id }}">

@@ -27,7 +27,6 @@ class CollectionController extends Controller
         $collection = new Collection();
         $collection->user_id = auth()->user()->id;
         $collection->name = $request->name;
-        $collection->slug = $request->slug;
         $collection->description = $request->content;
         $collection->image = $this->imageSaver->upload($request, null, 'collection');
         $collection->status = 1;
