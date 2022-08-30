@@ -52,6 +52,20 @@
                         </tr>
                     </tbody>
                 </table>
+
+                @if ($order->status == 0)
+
+                <form action="{{ route('basket.payment') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="id" value="{{ $order->id }}">
+                    <input type="hidden" name="slug" value="{{ $order->slug }}">
+                    <input type="hidden" name="amount" value="{{ $order->amount }}">
+                    <input type="hidden" name="email" value="{{ $order->email }}">
+
+                    <button class="btn-main mt-4 float-end"><span>Оплатить</span></button>
+                </form>
+
+                @endif
             </div>
 
 
@@ -98,20 +112,6 @@
                         @endif
                     </div>
                 </div>
-                
-                @if ($order->status == 0)
-
-                <form action="{{ route('basket.payment') }}" method="POST">
-                    @csrf
-                    <input type="hidden" name="id" value="{{ $order->id }}">
-                    <input type="hidden" name="slug" value="{{ $order->slug }}">
-                    <input type="hidden" name="amount" value="{{ $order->amount }}">
-                    <input type="hidden" name="email" value="{{ $order->email }}">
-
-                    <button class="btn-main mt-4 float-end"><span>Оплатить</span></button>
-                </form>
-
-                @endif
             </div>
 
         </div>
