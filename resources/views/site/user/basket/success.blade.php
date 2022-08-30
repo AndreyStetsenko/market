@@ -78,6 +78,26 @@
                         <p>Комментарий: {{ $order->comment }}</p>
                     @endisset
                 </div>
+
+                <div class="box-url blue mt-3">
+                    <h4 class="mb-3">Связь с продавцом</h4>
+                    
+                    <div class="box-url-socials mt-4">
+                        @if ($order->user->telegram)
+                        <a class="box-url-social" href="https://t.me/{{ $order->user->telegram }}">
+                            <i class="fa fa-telegram"></i>
+                            <span class="cont">{{ $order->user->telegram }}</span>
+                        </a>
+                        @endif
+
+                        @if ($order->user->phone)
+                        <a class="box-url-social" href="tel:{{ $order->user->phone }}">
+                            <i class="fa fa-phone"></i>
+                            <span class="cont">{{ $order->user->phone }}</span>
+                        </a>
+                        @endif
+                    </div>
+                </div>
                 
                 @if ($order->status == 0)
 
