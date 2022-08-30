@@ -84,7 +84,7 @@
                     
                     <div class="box-url-socials mt-4">
                         @if ($order->user->telegram)
-                        <a class="box-url-social" href="https://t.me/{{ $order->user->telegram }}">
+                        <a class="box-url-social" href="https://t.me/{{ $order->user->telegram }}" target="_blank">
                             <i class="fa fa-telegram"></i>
                             <span class="cont">{{ $order->user->telegram }}</span>
                         </a>
