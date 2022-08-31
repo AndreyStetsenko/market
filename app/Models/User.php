@@ -25,6 +25,7 @@ class User extends Authenticatable {
         'username',
         'avatar',
         'admin',
+        'credits'
     ];
 
     /**
@@ -120,5 +121,20 @@ class User extends Authenticatable {
     public function activities(): HasMany
     {
         return $this->hasMany(Activity::class);
+    }
+
+    public function getReferrals()
+    {
+        return ReferralProgram::all()->map(function ($program) {
+            return ReferralLink::getReferral($this, $program);
+        });
+    }
+
+    public static function addCredits($user_id, $tokens)
+    {
+        $tokens = User::find($user_id)->credits + $tokens;
+        return User::find($user_id)->update([
+            'credits' => $tokens
+        ]);
     }
 }

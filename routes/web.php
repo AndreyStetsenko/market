@@ -127,6 +127,11 @@ Route::group([
     Route::get('personal/collections', 'UserController@collections')->name('personal.collections');
     Route::get('personal/collection/{collection}', 'UserController@collectionProducts')->name('personal.collection');
     Route::get('personal/orders', 'UserController@orders')->name('personal.orders');
+
+    // Referals
+    Route::get('personal/referals', 'ReferalsController@userReferals')->name('personal.referals');
+
+    // Options
     Route::get('option/create', 'UserController@option')->name('create.option');
     // CRUD-операции над профилями пользователя
     Route::resource('profile', 'ProfileController');
