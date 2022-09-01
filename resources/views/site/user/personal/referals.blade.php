@@ -76,9 +76,6 @@
                                             </code>
                                             <span class="d-block mt-3">
                                                 Рефералов: {{ $referral->relationships()->count() }}
-                                                @foreach ($referral->relationships()->get() as $item)
-                                                    {{ $item->user->name }}
-                                                @endforeach
                                             </span>
 
                                             <span class="d-block mt-3">
