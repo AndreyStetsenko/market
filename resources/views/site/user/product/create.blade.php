@@ -38,25 +38,20 @@
                     <input type="hidden" id="check_img" value="1">
 
                     <div class="field-set">
-                        {{-- <h5>Загрузить изображение *</h5>
-
-                        <div class="form-group d-create-file">
-                            <p id="file_name">PNG, JPG, JPEG</p>
-                            <input type="button" id="get_file" class="btn-main" name="get_file" value="Browse">
-                            <input type="file" class="form-control" id="upload_file" 
-                                    name="image" accept="image/png, image/jpeg, image/jpg image/webp" required>
-                            <div class="input-error"></div>
-                        </div> --}}
+                        <h5>Загрузить изображения *</h5>
 
                         <div class="spacer-40"></div>
-                        
-                        <div class="form-group">
-                            <h5>Загрузить изображение *</h5>
-                            <ul id="file_name" class="text-muted fs-6 mt-2 mb-2 d-block list">PNG, JPG, JPEG</ul>
-                            <button type="button" class="btn-load-img" id="load-img">Загрузить изображение</button>
-                            <div class="input-error input-error-image"></div>
-                            <input type="file" class="form-control" id="image" 
-                                name="image" accept="image/png, image/jpeg, image/jpg image/webp" required multiple style="opacity: 0; margin: 0; padding: 0; height: 0;">
+
+                        <div class="form-group add-images">
+                            <ul class="add-images-wrap"></ul>
+                            <label class="form-file-add form-file-btn" data-imgs="0">
+                                <span class="cont"><i class="fa fa-plus"></i></span>
+                            </label>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <input type="text" name="images" id="imgOnCheck" style="opacity: 0; display: block; height: 0; margin: 0; padding: 0">
+                            <div class="input-error"></div>
                         </div>
 
                         <div class="spacer-40"></div>
@@ -79,44 +74,6 @@
                         </div>
 
                         <div class="spacer-20"></div>
-
-                        {{-- <div class="form-group">
-                            <!-- новинка -->
-                            <div class="form-check form-check-inline">
-                                @php
-                                    $checked = false; // создание нового товара
-                                    if (isset($product)) $checked = $product->new; // редактирование товара
-                                    if (old('new')) $checked = true; // были ошибки при заполнении формы
-                                @endphp
-                                <input type="checkbox" name="new" class="form-check-input" id="new-product"
-                                       @if($checked) checked @endif value="1">
-                                <label class="form-check-label" for="new-product">Новинка</label>
-                            </div>
-                            <!-- лидер продаж -->
-                            <div class="form-check form-check-inline">
-                                @php
-                                    $checked = false; // создание нового товара
-                                    if (isset($product)) $checked = $product->hit; // редактирование товара
-                                    if (old('hit')) $checked = true; // были ошибки при заполнении формы
-                                @endphp
-                                <input type="checkbox" name="hit" class="form-check-input" id="hit-product"
-                                       @if($checked) checked @endif value="1">
-                                <label class="form-check-label" for="hit-product">Лидер продаж</label>
-                            </div>
-                            <!-- распродажа -->
-                            <div class="form-check form-check-inline ">
-                                @php
-                                    $checked = false; // создание нового товара
-                                    if (isset($product)) $checked = $product->sale; // редактирование товара
-                                    if (old('sale')) $checked = true; // были ошибки при заполнении формы
-                                @endphp
-                                <input type="checkbox" name="sale" class="form-check-input" id="sale-product"
-                                       @if($checked) checked @endif value="1">
-                                <label class="form-check-label" for="sale-product">Распродажа</label>
-                            </div>
-                        </div>
-
-                        <div class="spacer-20"></div> --}}
 
                         <div class="form-group">
                             <h5>Категория *</h5>
@@ -222,18 +179,23 @@
 @endsection
 
 @push('scripts')
-{{-- <script>
-    const item_desc = $('#item_desc');
-
-    var quill = new Quill('#item_desc', {
-        modules: {
-            toolbar: [
-                [{ header: [1, 2, false] }],
-                ['bold', 'italic', 'underline']
-            ]
-        },
-        placeholder: "Введите описание товара..",
-        theme: 'bubble'  // or 'bubble'
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js" integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
+<script>
+    $(document).ready(function() {
+      $(".btn-success").click(function(){ 
+          var html = $(".clone").html();
+          $(".increment").after(html);
+      });
+      $("body").on("click",".btn-danger",function(){ 
+          $(this).parents(".control-group").remove();
+      });
     });
-</script> --}}
+
+    // $('.add-images-wrap').sortable({
+    //     axis: "x",
+    //     cursor: 'move',
+    //     scroll: 'false',
+    //     opacity: 0.9
+    // }).disableSelection();
+</script>
 @endpush

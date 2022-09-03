@@ -162,4 +162,13 @@ class Product extends Model {
         $query->orderBy('relevance', 'desc');
         return $query;
     }
+
+    public function attachmentable() {
+        return $this->hasMany(Attachmentable::class, 'attachmentable_id', 'id');
+    }
+
+    public function attachment()
+    {
+        return $this->belongsTo(Attachmentable::class);
+    }
 }

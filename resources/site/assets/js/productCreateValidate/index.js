@@ -78,7 +78,7 @@ export default class productCreateValidate {
                         }
                     }
                 },
-                image: {
+                images: {
                     required: {
                         param: true,
                         depends() {
@@ -102,7 +102,7 @@ export default class productCreateValidate {
                 content: {
                     required: setDescription
                 },
-                image: {
+                images: {
                     required: setImage
                 },
                 slug: {

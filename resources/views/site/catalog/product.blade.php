@@ -9,12 +9,43 @@
         <div class="row g-5">
             <div class="col-md-6 text-center">
                 <div class="nft-image-wrapper">
-                    @if ($product->image)
-                        @php($url = url('storage/catalog/product/source/' . $product->image))
+                    @if ($product->attachmentable->first())
+                        @php($url = url('storage/catalog/product/source/' . $product->attachmentable->first()->attachment->name))
                         <img src="{{ $url }}" alt="" class="img-fluid img-rounded mb-sm-30">
                     @else
                         <img src="https://via.placeholder.com/600x300" alt="" class="img-fluid img-rounded mb-sm-30">
                     @endif
+                </div>
+                
+                <div class="product-carousel">
+                    <div class="row">
+                        @foreach ($product->attachmentable as $item)
+                            <div class="col-md-3 mb-4">
+                                <div class="item">
+                                    <img data-fancybox="gallery" src="{{ url('storage/catalog/product/source/' . $item->attachment->name) }}" alt="{{ $product->name }}">
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                    {{-- <div class="swiper">
+                        <div class="swiper-wrapper">
+                            <!-- Slides -->
+                            @foreach ($product->attachmentable as $item)
+                                <div class="swiper-slide">
+                                    <img src="{{ url('storage/catalog/product/source/' . $item->attachment->name) }}" alt="{{ $product->name }}">
+                                </div>
+                            @endforeach
+                          </div>
+                          <!-- If we need pagination -->
+                          <div class="swiper-pagination"></div>
+                        
+                          <!-- If we need navigation buttons -->
+                          <div class="swiper-button-prev"></div>
+                          <div class="swiper-button-next"></div>
+                        
+                          <!-- If we need scrollbar -->
+                          <div class="swiper-scrollbar"></div>
+                    </div> --}}
                 </div>
             </div>
             <div class="col-md-6">

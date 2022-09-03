@@ -76,6 +76,7 @@ module.exports = {
         "nouislider": true,
         "pdfMake": true,
         "Swiper": true,
-        "window": true
+        "window": true,
+        "jquery-ui": true
     }
 };

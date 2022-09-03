@@ -13,6 +13,10 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Basket;
+use App\Models\Attachment;
+use App\Models\Attachmentable;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class ProductController extends Controller
 {
@@ -77,18 +81,107 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ProductCatalogRequest $request) {
+    public function store(Request $request) {        
+
         $request->merge([
             'new' => $request->has('new'),
             'hit' => $request->has('hit'),
             'sale' => $request->has('sale'),
         ]);
         $data = $request->all();
-        $data['image'] = $this->imageSaver->upload($request, null, 'product');
+        // $data['image'] = $this->imageSaver->upload($request, null, 'product');
+        $data['image'] = 'avatar.jpeg';
         $product = Product::create($data);
+
+        if($request->hasfile('filename'))
+         {
+
+            foreach($request->file('filename') as $image)
+            {
+                $name = $image->getClientOriginalName();
+                $dir = 'product';
+
+                $source = $image;
+                if ($source) { // если было загружено изображение
+                    // перед загрузкой нового изображения удаляем старое
+                    $ext = $source->extension();
+                    // сохраняем загруженное изображение без всяких изменений
+                    $path = $source->store('catalog/'.$dir.'/source', 'public');
+                    $path = Storage::disk('public')->path($path); // абсолютный путь
+                    $name = basename($path); // имя файла
+                    // создаем уменьшенное изображение 600x300px, качество 100%
+                    $dst = 'catalog/'.$dir.'/image/';
+                    $this->resize($path, $dst, 600, 300, $ext);
+                    // создаем уменьшенное изображение 300x150px, качество 100%
+                    $dst = 'catalog/'.$dir.'/thumb/';
+                    $this->resize($path, $dst, 300, 150, $ext);
+                }
+
+                $data_image[] = $name;
+
+                $attachment = Attachment::create([
+                    'name' => $name,
+                    'sort' => 1,
+                    'user_id' => auth()->user()->id
+                ]);
+        
+                $attachmentable = Attachmentable::create([
+                    'attachmentable_id' => $product->id,
+                    'attachment_id' => $attachment->id
+                ]);
+            }
+        }
+
+        // $attachment = Attachment::create([
+        //     'name' => json_encode($data_image),
+        //     'sort' => 1,
+        //     'user_id' => auth()->user()->id
+        // ]);
+
+        // $attachmentable = Attachmentable::create([
+        //     'attachmentable_id' => $product->id,
+        //     'attachment_id' => $attachment->id
+        // ]);
+
+        // if($request->hasFile('image'))
+        // {
+        // $images = $deal_item->images;
+        // $files = $request->file('image');
+        // foreach ($files as $file) {
+        //     $extention = $file->getClientOriginalExtension();
+        //     $fileNameToStore = 'deals/' . $deal_item->id . '/images/'.sha1_file($file).".".$extention;
+        //     $path = $file->storeAs('public', $fileNameToStore);
+        //     $images[] = "/storage/".$fileNameToStore;
+
+        //     $attachment = Attachment::create([
+        //         'name' => $fileNameToStore,
+        //         'sort' => 1,
+        //         'user_id' => auth()->user()->id
+        //     ]);
+
+        //     $attachmentable = Attachmentable::create([
+        //         'attachmentable_id' => $product->id,
+        //         'attachment_id' => $attachment->id
+        //     ]);
+        // }
+        // $deal_item->images = $images;
+        // }
+
         return redirect()
             ->route('catalog.product', ['product' => $product->slug])
             ->with('success', 'Новый товар успешно создан');
+    }
+
+    private function resize($src, $dst, $width, $height, $ext) {
+        // создаем уменьшенное изображение width x height, качество 100%
+        $image = Image::make($src)
+            ->heighten($height)
+            ->resizeCanvas($width, $height, 'center', false, 'eeeeee')
+            ->encode($ext, 100);
+        // сохраняем это изображение под тем же именем, что исходное
+        $name = basename($src);
+        Storage::disk('public')->put($dst . $name, $image);
+        $image->destroy();
     }
 
     /**
@@ -132,16 +225,6 @@ class ProductController extends Controller
         $data = $request->all();
         $data['image'] = $this->imageSaver->upload($request, $product, 'product');
         $product->update($data);
-        // $product->name = $request->name;
-        // $product->price = $request->price;
-        // $product->new = $request->new;
-        // $product->hit = $request->hit;
-        // $product->sale = $request->sale;
-        // $product->category_id = $request->category_id;
-        // $product->collection_id = $request->collection_id;
-        // $product->content = $request->content;
-        // if ($request->image) $product->image = $this->imageSaver->upload($request, null, 'product');
-        // $product->update();
 
         return redirect()
             ->route('user.product.edit', ['product' => $product->id])

@@ -45,6 +45,7 @@
         "webpack-cli": "^3.3.12"
     },
     "dependencies": {
+        "@shopify/draggable": "^1.0.0-beta.8",
         "@sindresorhus/slugify": "^2.1.0",
         "axios": "^0.19.2",
         "body-scroll-lock": "^3.1.5",
@@ -60,6 +61,7 @@
         "detect-browser": "^5.2.0",
         "dompurify": "^1.0.10",
         "element-remove": "^1.0.4",
+        "file-upload-with-preview": "^5.0.7",
         "handlebars": "^4.7.7",
         "handlebars-loader": "^1.7.1",
         "handlebars-template-loader": "^1.0.0",
@@ -69,6 +71,7 @@
         "isomorphic-fetch": "^2.2.1",
         "jquery": "^3.6.0",
         "jquery-mask-plugin": "^1.14.16",
+        "jquery-ui": "^1.13.2",
         "jquery-validation": "^1.19.5",
         "js-cookie": "^2.2.1",
         "labelmake": "^2.0.19",
@@ -85,7 +88,8 @@
         "npx": "^10.2.2",
         "pdfmake": "^0.1.71",
         "perfect-scrollbar": "^1.5.0",
-        "swiper": "^5.4.5",
+        "sortablejs": "^1.15.0",
+        "swiper": "^8.3.2",
         "transliter": "^2.2.1",
         "window-scroll": "^1.0.0",
         "wnumb": "^1.2.0"

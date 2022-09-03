@@ -1,7 +1,8 @@
 import ProductCreateValidate from './productCreateValidate';
 import LoadImg from './loadImg';
 import CheckoutValidate from './checkoutValidate';
-// import transliteration from './transliteration';
+import productCarousel from './productCarousel';
+import AddImages from './addImages';
 // import ProductCountBasket from './productCountBasket';
 
 export default class Main {
@@ -17,6 +18,8 @@ export default class Main {
         new LoadImg();
         // transliteration();
         new CheckoutValidate();
+        productCarousel();
+        new AddImages();
     }
 }
 

@@ -39,25 +39,28 @@
                     <input type="hidden" id="check_img" value="0">
 
                     <div class="field-set">
-                        {{-- <h5>Загрузить изображение *</h5>
-
-                        <div class="form-group d-create-file">
-                            <p id="file_name">PNG, JPG, JPEG</p>
-                            <input type="button" id="get_file" class="btn-main" name="get_file" value="Browse">
-                            <input type="file" class="form-control" id="upload_file" 
-                                    name="image" accept="image/png, image/jpeg, image/jpg image/webp" required>
-                            <div class="input-error"></div>
-                        </div> --}}
+                        <h5>Загрузить изображение *</h5>
 
                         <div class="spacer-40"></div>
-                        
-                        <div class="form-group">
-                            <h5>Загрузить изображение *</h5>
-                            <ul id="file_name" class="text-muted fs-6 mt-2 mb-2 d-block list">PNG, JPG, JPEG</ul>
-                            <button type="button" class="btn-load-img" id="load-img">Загрузить изображение</button>
-                            <div class="input-error input-error-image"></div>
-                            <input type="file" class="form-control" id="image" 
-                                name="image" accept="image/png, image/jpeg, image/jpg image/webp" multiple style="opacity: 0; margin: 0; padding: 0; height: 0;">
+
+                        <div class="form-group add-images">
+                            <ul class="add-images-wrap">
+                                @foreach ($product->attachmentable as $item)
+                                    <li class="form-file-add true" style="background-image: url({{ url('storage/catalog/product/source/' . $item->attachment->name) }})">
+                                        {{-- <input class="fileimg-inp" type="file" name="filename[]" value="{{ url('storage/catalog/product/source/' . $item->attachment->name) }}"> --}}
+                                        <span class="cont"><i class="fa fa-plus"></i></span>
+                                        <button class="remove" type="button"><i class="fa fa-close"></i></button>
+                                    </li>
+                                @endforeach
+                            </ul>
+                            <label class="form-file-add form-file-btn" data-imgs="0">
+                                <span class="cont"><i class="fa fa-plus"></i></span>
+                            </label>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <input type="text" name="images" id="imgOnCheck" style="opacity: 0; display: block; height: 0; margin: 0; padding: 0">
+                            <div class="input-error"></div>
                         </div>
 
                         <div class="spacer-40"></div>
