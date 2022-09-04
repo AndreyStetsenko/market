@@ -44,7 +44,7 @@
 
                         <div class="form-group add-images">
                             <ul class="add-images-wrap"></ul>
-                            <label class="form-file-add form-file-btn" data-imgs="0">
+                            <label class="form-file-add form-file-btn" data-imgs="0" id="formFileAdd">
                                 <span class="cont"><i class="fa fa-plus"></i></span>
                             </label>
                         </div>

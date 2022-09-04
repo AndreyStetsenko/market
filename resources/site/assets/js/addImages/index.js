@@ -5,16 +5,24 @@ window.Sortable = Sortable;
 export default class AddImages {
     constructor() {
         this.settings();
-        this.addImage();
+        this.bindEvents();
         this.removeImage();
-        this.elemDrag();
     }
     settings() {
         this.fileContainer = document.querySelector('.add-images-wrap');
         this.fileContainerParent = document.querySelector('.add-images');
-        this.btn = document.querySelector('.form-file-btn');
         this.inputsMax = 6;
         this.previewImg = document.getElementById('get_file_2');
+
+        this.btn = document.getElementById('formFileAdd');
+        this.elWrap = document.querySelector('.add-images-wrap');
+
+        if (this.btn) this.addImage();
+        if (this.elWrap) this.elemDrag();
+    }
+    bindEvents() {
+        const items = $('.add-images-wrap').find('.form-file-add');
+        if (items?.length === 5) this.btn.css.display = 'none';
     }
     addImage() {
         this.btn.addEventListener('click', () => {
@@ -133,9 +141,7 @@ export default class AddImages {
         });
     }
     elemDrag() {
-        const el = document.querySelector('.add-images-wrap');
-
-        new Sortable(el, {
+        new Sortable(this.elWrap, {
             animation: 150,
             ghostClass: 'ghost',
 
