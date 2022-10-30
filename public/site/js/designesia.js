@@ -1748,15 +1748,31 @@
 		}
 
         jQuery("#btn_copy").on("click", function() {
-            // copyText("#wallet");
-            var copyText = document.getElementById('wallet');
+            var elementHash = document.getElementById('btn_copy');
+            
+            // Create a "hidden" input
+            var aux = document.createElement("input");
+        
+            // Assign it the value of the specified element
+            aux.setAttribute("value", elementHash.getAttribute('data-hash'));
+        
+            // Append it to the body
+            document.body.appendChild(aux);
+        
+            // Highlight its content
+            aux.select();
+        
+            // Copy the highlighted text
+            document.execCommand("copy");
+        
+            // Remove it from the body
+            document.body.removeChild(aux);
 
-            /* Select the text field */
-            copyText.select();
-            copyText.setSelectionRange(0, 99999); /* For mobile devices */
+            elementHash.innerHTML = 'Copied!';
 
-            /* Copy the text inside the text field */
-            navigator.clipboard.writeText(copyText.value);
+            setTimeout(() => {
+                elementHash.innerHTML = 'Copy';
+            }, 1500);
         });
 
         $('#mainmenu > li:has(ul)').addClass('menu-item-has-children');
