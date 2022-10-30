@@ -8,10 +8,15 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Laravel\Cashier\Billable;
+use Bavix\Wallet\Traits\HasWallet;
+use Bavix\Wallet\Traits\HasWallets;
+use Bavix\Wallet\Interfaces\Wallet;
 
-class User extends Authenticatable {
+class User extends Authenticatable implements Wallet {
     use Notifiable,
-        Billable;
+        Billable,
+        HasWallet,
+        HasWallets;
 
     /**
      * The attributes that are mass assignable.
@@ -100,9 +105,9 @@ class User extends Authenticatable {
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function wallet() {
-        return $this->hasMany(Wallets::class);
-    }
+    // public function wallet() {
+    //     return $this->hasMany(Wallets::class);
+    // }
 
     /**
      * Связь «один ко многим» таблицы `users` с таблицей `collections`

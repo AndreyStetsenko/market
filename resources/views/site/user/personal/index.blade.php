@@ -9,6 +9,8 @@
         <div class="row">
             @include('site.user.personal.part.head')
 
+            {{-- {{ auth()->user()->createWallet() }} --}}
+
             <div class="col-md-12">
                 <div class="de_tab tab_simple">
 

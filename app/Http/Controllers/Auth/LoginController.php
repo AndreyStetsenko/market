@@ -49,6 +49,7 @@ class LoginController extends Controller
             $route = 'index';
             $message = 'Вы успешно вошли в панель управления';
         }
+        $user->balance;
         return redirect()->route($route)
             ->with('success', $message);
     }
