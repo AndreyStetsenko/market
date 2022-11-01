@@ -55,7 +55,9 @@
                         @else
                         <div class="menu_side_area">
                             <div class="de-login-menu">
+                                @if (auth()->user()->manager)
                                 <a href="{{ route('user.create.option') }}" class="btn-main btn-wallet"><i class="icon_wallet_alt"></i><span>Создать</span></a>
+                                @endif
 
                                 <span id="de-click-menu-profile" class="de-menu-profile">
                                     @if (auth()->user()->avatar != 'avatar.jpeg')
@@ -81,10 +83,14 @@
                                     <div class="d-line"></div>
             
                                     <ul class="de-submenu-profile">
-                                        @if ( auth()->user()->admin == 1 )
+                                        @if ( auth()->user()->admin )
                                             <li><a href="{{ route('admin.index') }}" target="_blank"><i class="fa fa-user"></i> Админ панель</a></li>
                                         @endif
+                                        @if ( auth()->user()->manager )
                                         <li><a href="{{ route('user.personal') }}"><i class="fa fa-user"></i> Мой профиль</a></li>
+                                        @else
+                                        <li><a href="{{ route('user.personal.orders') }}"><i class="fa fa-user"></i> Мой профиль</a></li>
+                                        @endif
                                         <li><a href="{{ route('user.edit') }}"><i class="fa fa-pencil"></i> Редактировать</a></li>
                                         <li>
                                         <form action="{{ route('user.logout') }}" method="post" class="p-0 m-0" id="form-user-logout">

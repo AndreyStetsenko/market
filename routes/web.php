@@ -123,8 +123,8 @@ Route::group([
     Route::get('index', 'UserController@index')->name('index');
     Route::get('edit', 'UserController@edit')->name('edit');
     Route::post('update', 'UserController@update')->name('update');
-    Route::get('personal', 'UserController@personal')->name('personal');
-    Route::get('personal/collections', 'UserController@collections')->name('personal.collections');
+    Route::get('personal', 'UserController@personal')->name('personal')->middleware('manager');
+    Route::get('personal/collections', 'UserController@collections')->name('personal.collections')->middleware('manager');
     Route::get('personal/collection/{collection}', 'UserController@collectionProducts')->name('personal.collection');
     Route::get('personal/orders', 'UserController@orders')->name('personal.orders');
 
@@ -132,7 +132,7 @@ Route::group([
     Route::get('personal/referals', 'ReferalsController@userReferals')->name('personal.referals');
 
     // Options
-    Route::get('option/create', 'UserController@option')->name('create.option');
+    Route::get('option/create', 'UserController@option')->name('create.option')->middleware('manager');
     // CRUD-операции над профилями пользователя
     Route::resource('profile', 'ProfileController');
     // просмотр списка заказов в личном кабинете
@@ -140,7 +140,7 @@ Route::group([
     // просмотр отдельного заказа в личном кабинете
     Route::get('order/{order}', 'OrderController@show')->name('order.show');
     // CRUD-операции над продуктами пользователя
-    Route::resource('product', 'ProductController');
+    Route::resource('product', 'ProductController')->middleware('manager');
     // Route::post('product/{product}/update', 'ProductController@update')->name('product.update');
     // доп.маршрут для показа товаров категории
     Route::get('product/category/{category}', 'ProductController@category')
@@ -148,8 +148,8 @@ Route::group([
     // CRUD-операции над аккаунтом пользователя
     // Route::get('account', 'AccountController')->name('account.show');
     Route::get('collections', 'CollectionController@index')->name('collection.index');
-    Route::get('collection/create', 'CollectionController@create')->name('collection.create');
-    Route::get('collection/edit/{collection}', 'CollectionController@edit')->name('collection.edit');
+    Route::get('collection/create', 'CollectionController@create')->name('collection.create')->middleware('manager');
+    Route::get('collection/edit/{collection}', 'CollectionController@edit')->name('collection.edit')->middleware('manager');
     Route::post('collection/store', 'CollectionController@store')->name('collection.store');
     Route::post('collection/update/{collection}', 'CollectionController@update')->name('collection.update');
 });

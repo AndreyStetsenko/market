@@ -6,7 +6,7 @@ use Closure;
 
 class Administrator {
     public function handle($request, Closure $next, $guard = null) {
-        if (!auth()->user()->admin || !auth()->user()->manager) {
+        if (!auth()->user()->admin) {
             abort(404);
         }
         return $next($request);

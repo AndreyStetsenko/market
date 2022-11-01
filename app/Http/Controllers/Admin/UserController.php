@@ -45,6 +45,26 @@ class UserController extends Controller {
         /*
          * Обновляем пользователя
          */
+        switch ($request->role) {
+            case '0':
+                $user->manager = 0;
+                $user->admin = 0;
+                break;
+            case '1':
+                $user->manager = 1;
+                $user->admin = 0;
+                break;
+            case '2':
+                $user->manager = 1;
+                $user->admin = 1;
+                break;
+            
+            default:
+                $user->manager = 0;
+                $user->admin = 0;
+                break;
+        }
+        
         if ($request->change_password) { // если надо изменить пароль
             $request->merge(['password' => Hash::make($request->password)]);
             $user->update($request->all());
