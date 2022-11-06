@@ -152,6 +152,9 @@ Route::group([
     Route::get('collection/edit/{collection}', 'CollectionController@edit')->name('collection.edit')->middleware('manager');
     Route::post('collection/store', 'CollectionController@store')->name('collection.store');
     Route::post('collection/update/{collection}', 'CollectionController@update')->name('collection.update');
+
+    // Wallet
+    Route::get('wallet', 'WalletController@index')->name('wallet');
 });
 
 Route::get('collection/{collection}', 'CollectionController@show')->name('collection.show');

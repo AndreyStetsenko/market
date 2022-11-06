@@ -75,7 +75,7 @@
                                     <div class="spacer-10"></div>
 
                                     <div class="d-wallet">
-                                        <h4>Кошелек</h4>
+                                        <h4><a href="{{ route('user.wallet') }}" class="text-white">Кошелек</a></h4>
                                         <span class="d-wallet-address">{{ auth()->user()->balance }} {{ auth()->user()->wallet['meta']['currency'] }}</span>
                                         <button id="btn_copy" title="Copy Text" data-hash="{{ auth()->user()->wallet['uuid'] }}">Copy</button>
                                     </div>

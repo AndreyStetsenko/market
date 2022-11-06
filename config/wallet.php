@@ -34,6 +34,12 @@ use Bavix\Wallet\Services\ExchangeService;
 use Bavix\Wallet\Services\PrepareService;
 use Bavix\Wallet\Services\PurchaseService;
 use Bavix\Wallet\Services\TaxService;
+use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
+
+ function __construct(Wallet $wallet) {
+    $this->wallet = $wallet;
+}
 
 return [
     /**

@@ -38,9 +38,9 @@
                         <div class="mt-3">
                             <label for="email" class="form-label">Роль</label>
                             <select name="role" class="form-control">
-                                <option value="0" @if ($user->admin == 0) selected @endif>Пользователь</option>
-                                <option value="1" @if ($user->manager == 1) selected @endif>Менеджер</option>
-                                <option value="2" @if ($user->admin == 1) selected @endif>Администратор</option>
+                                <option value="0" @if (auth()->user()->admin == 0) selected @endif>Пользователь</option>
+                                <option value="1" @if (auth()->user()->manager == 1) selected @endif>Менеджер</option>
+                                <option value="2" @if (auth()->user()->admin == 1) selected @endif>Администратор</option>
                             </select>
                         </div>
 
