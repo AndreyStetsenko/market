@@ -30,6 +30,8 @@ class User extends Authenticatable implements Wallet {
         'username',
         'avatar',
         'admin',
+        'manager',
+        'is_seller',
         'credits'
     ];
 

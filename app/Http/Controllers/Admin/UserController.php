@@ -64,10 +64,12 @@ class UserController extends Controller {
                 $user->admin = 0;
                 break;
         }
+
+        $data = $request->all();
         
         if ($request->change_password) { // если надо изменить пароль
             $request->merge(['password' => Hash::make($request->password)]);
-            $user->update($request->all());
+            $user->update($data);
         } else {
             $user->update($request->except('password'));
         }
@@ -75,7 +77,7 @@ class UserController extends Controller {
          * Возвращаемся к списку
          */
         return redirect()
-            ->route('admin.user.index')
+            ->back()
             ->with('success', 'Данные пользователя успешно обновлены');
     }
 
