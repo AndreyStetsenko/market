@@ -15,6 +15,6 @@ class PageController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function __invoke(Request $request, Page $page) {
-        return view('page.show', compact('page'));
+        return view('site.site-pages.' . $page->slug, compact('page'));
     }
 }

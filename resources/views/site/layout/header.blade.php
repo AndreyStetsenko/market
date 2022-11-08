@@ -36,6 +36,16 @@
                                     @if ($positions) ({{ $positions }}) @endif
                                 </a>
                             </li>
+                            
+                            @foreach ($pages as $item)
+                            <li class="nav-item" id="top-basket">
+                                <a class="nav-link"
+                                   href="{{ route('page.show', $item->slug) }}">
+                                    {{ $item->name }}
+                                </a>
+                            </li>
+                            @endforeach
+
                             @guest
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('user.login') }}">Войти</a>

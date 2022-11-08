@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Laravel\Cashier\Cashier;
+use App\Models\Page;
 
 class AppServiceProvider extends ServiceProvider {
     /**
@@ -39,5 +40,8 @@ class AppServiceProvider extends ServiceProvider {
         Blade::if('admin', function() {
             return ! auth()->check() && auth()->user()->admin;
         });
+
+        $pages = Page::all();
+        view()->share('pages', $pages);
     }
 }

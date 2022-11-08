@@ -24,7 +24,7 @@ Route::get('/', 'IndexController')->name('index');
 /*
  * Страницы «Доставка», «Контакты» и прочие
  */
-Route::get('/page/{page:slug}', 'PageController')->name('page.show');
+Route::get('/{page:slug}', 'PageController')->name('page.show');
 
 /*
  * Каталог товаров: категория, бренд и товар

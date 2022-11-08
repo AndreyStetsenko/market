@@ -31,7 +31,7 @@
 
         <div class="mt-3">
             <label class="form-label">Контент (html)</label>
-            <textarea class="form-control w-full" name="content" placeholder="Контент (html)" maxlength="200"
+            <textarea class="form-control w-full" name="content" placeholder="Контент (html)"
                     rows="3">{{ old('content') ?? $page->content ?? '' }}</textarea>
         </div>
         
