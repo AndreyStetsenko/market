@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Coinremitter\Coinremitter;
 use Illuminate\Support\Facades\Http;
 use Onetoweb\NOWPayments\Client as NOWPaymentsClient;
+use App\Models\User;
+use App\Models\Wallet;
 
 class BasketController extends Controller {
 
@@ -299,5 +301,30 @@ class BasketController extends Controller {
 
     public function cancel(Request $request) {
         dd($request);
+    }
+
+    public function fastPayment(Request $request)
+    {
+        $user = auth()->user();
+        $recipient = User::find(1);
+        $sum_transf = $request->amount * 100;
+
+        $recipient_wallet_name = Wallet::where('holder_id', $recipient->id)->first();
+
+        $my_wallet = $user->getWallet('usdt');
+        $recipient_wallet = $recipient->getWallet('usdt');
+
+        if ( $my_wallet->balance >= $sum_transf ) {
+            $my_wallet->transfer($recipient_wallet, $sum_transf);
+
+            $order = Order::find($request->id);
+            $order->status = 2;
+            $order->invoice = 0;
+            $order->update();
+
+            return redirect()->back();
+        } else {
+            return redirect()->back()->withErrors(['msg' => 'Insufficient funds on the balance sheet']);
+        }
     }
 }

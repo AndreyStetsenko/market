@@ -74,6 +74,8 @@ Route::group([
         ->name('success');
     Route::post('order/pay', 'BasketController@payment')
         ->name('payment');
+    Route::post('order/fast-pay', 'BasketController@fastPayment')
+        ->name('fast-payment');
     Route::post('order/pay/response', 'BasketController@response')
         ->name('pay.response');
     Route::get('order/pay/success/{id}', 'BasketController@paySuccess')

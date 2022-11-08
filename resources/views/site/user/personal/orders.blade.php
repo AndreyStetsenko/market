@@ -37,8 +37,10 @@
                                     <td>{{ $order->amount }} USD</td>
                                     @if ($order->status == 0)
                                         <td class="text-warning">{{ $statuses[$order->status] }}</td>
-                                    @elseif (in_array($order->status, [1,2,3]))
+                                    @elseif (in_array($order->status, [1,3]))
                                         <td class="text-warning">{{ $statuses[$order->status] }}</td>
+                                    @elseif ($order->status == 2)
+                                        <td class="text-success">{{ $statuses[$order->status] }}</td>
                                     @elseif ($order->status == 5)
                                         <td class="text-danger">{{ $statuses[$order->status] }}</td>
                                     @else

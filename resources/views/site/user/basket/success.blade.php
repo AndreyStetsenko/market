@@ -11,7 +11,7 @@
                 
                 <div class="col-md-12 text-center">
                     <h1>Заказ #{{ $order->id }}</h1><br>
-                    <span>{{ $status[$order->status] }}</span>
+                    <span @if ($status[$order->status] == 'Оплачен') style="color: green" @endif>{{ $status[$order->status] }}</span>
                 </div>
                 <div class="clearfix"></div>
             </div>
@@ -55,14 +55,18 @@
 
                 @if ($order->status == 0)
 
-                <form action="{{ route('basket.payment') }}" method="POST">
+                <form action="{{ route('basket.fast-payment') }}" method="POST">
                     @csrf
                     <input type="hidden" name="id" value="{{ $order->id }}">
                     <input type="hidden" name="slug" value="{{ $order->slug }}">
                     <input type="hidden" name="amount" value="{{ $order->amount }}">
                     <input type="hidden" name="email" value="{{ $order->email }}">
 
+                    @if (auth()->user()->balance / 100 >= $order->amount)
                     <button class="btn-main mt-4 float-end"><span>Оплатить</span></button>
+                    @else
+                    Недостаточно средств на балансе
+                    @endif
                 </form>
 
                 @endif
