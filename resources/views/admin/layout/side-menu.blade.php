@@ -32,6 +32,13 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{{ route('admin.withdraws') }}" class="side-menu">
+                        <div class="side-menu__title">
+                            Вывод средств
+                        </div>
+                    </a>
+                </li>
+                <li>
                     <a href="{{ route('admin.category.index') }}" class="side-menu">
                         <div class="side-menu__title">
                             Категории

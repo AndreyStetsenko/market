@@ -155,6 +155,15 @@ Route::group([
 
     // Wallet
     Route::get('wallet', 'WalletController@index')->name('wallet');
+
+    // Transactions
+    Route::post('withdraw/store', 'TransactionsController@withStore')->name('withdraw.store');
+    Route::post('refill/store', 'TransactionsController@refillStore')->name('refill.store');
+    Route::get('refill/details/{uuid}', 'TransactionsController@refillDetails')->name('refill.details');
+    Route::post('refill/cp', 'TransactionsController@cp')->name('refill.cp');
+    Route::get('refill/pay/{uuid}', 'TransactionsController@pay')->name('refill.pay');
+    Route::post('refill/check', 'TransactionsController@check')->name('refill.check');
+    Route::post('refill/update', 'TransactionsController@update')->name('refill.update');
 });
 
 Route::get('collection/{collection}', 'CollectionController@show')->name('collection.show');
@@ -195,6 +204,9 @@ Route::group([
     // удаление изображения в wysiwyg-редакторе
     Route::delete('page/remove/image', 'PageController@removeImage')
         ->name('page.remove.image');
+
+    Route::get('withdraws', 'WithdrawsAdminController@withdraws')->name('withdraws');
+    Route::post('withdraws/success', 'WithdrawsAdminController@withdrawSuccess')->name('withdraw.success');
 });
 
 Route::get('user/{user}', 'UserController@profile')

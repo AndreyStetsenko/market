@@ -11,7 +11,9 @@ class WalletController extends Controller
     public function index()
     {
         $user = auth()->user();
+        $wallet = $user->wallet;
+        $transactions = $wallet->transactions->sortDesc();
 
-        return view('site.user.personal.wallet', compact('user'));
+        return view('site.user.personal.wallet', compact('user', 'wallet', 'transactions'));
     }
 }
