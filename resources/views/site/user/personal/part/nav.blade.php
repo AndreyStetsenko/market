@@ -2,7 +2,7 @@
     <ul class="de_nav">
         @if (auth()->user()->manager)<li class="{{ request()->routeIs('user.personal') ? 'active' : '' }}"><a href="{{ route('user.personal') }}"><span>{{ _('Мои товары') }}</span></a></li>@endif
         @if (auth()->user()->manager)<li class="{{ request()->routeIs('user.personal.collections') ? 'active' : '' }}"><a href="{{ route('user.personal.collections') }}"><span>{{ _('Мои коллекции') }}</span></a></li>@endif
-        <li class="{{ request()->routeIs('user.personal.orders') ? 'active' : '' }}"><a href="{{ route('user.personal.orders') }}"><span>{{ _('Мои заказы') }}</span></a></li>
+        <li class="{{ request()->routeIs('user.personal.orders') ? 'active' : '' }}"><a href="{{ route('user.personal.orders') }}"><span>{{ _('Мои ордеры') }}</span></a></li>
         <li class="{{ request()->routeIs('user.personal.referals') ? 'active' : '' }}"><a href="{{ route('user.personal.referals') }}"><span>{{ _('Мои рефералы') }}</span></a></li>
         <li class="{{ request()->routeIs('user.wallet') ? 'active' : '' }}"><a href="{{ route('user.wallet') }}"><span>{{ _('Кошелек') }}</span></a></li>
         <li class="{{ request()->routeIs('user.edit') ? 'active' : '' }}"><a href="{{ route('user.edit') }}"><span>{{ _('Редактировать профиль') }}</span></a></li>
