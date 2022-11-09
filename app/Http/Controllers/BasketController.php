@@ -170,18 +170,22 @@ class BasketController extends Controller {
      * Добавляет товар с идентификатором $id в корзину
      */
     public function add(Request $request, $id) {
-        $quantity = $request->input('quantity') ?? 1;
-        $this->basket->increase($id, $quantity);
-        if ( ! $request->ajax()) {
-            // выполняем редирект обратно на ту страницу,
-            // где была нажата кнопка «В корзину»
-            return back();
+        if ( ($request->count != null) && ($request->lost < $request->input('quantity')) ) {
+            return back()->with('error', 'Недостаточно товара в наличии');
+        } else {
+            $quantity = $request->input('quantity') ?? 1;
+            $this->basket->increase($id, $quantity);
+            if ( ! $request->ajax()) {
+                // выполняем редирект обратно на ту страницу,
+                // где была нажата кнопка «В корзину»
+                return back();
+            }
+            // в случае ajax-запроса возвращаем html-код корзины в правом
+            // верхнем углу, чтобы заменить исходный html-код, потому что
+            // теперь количество позиций будет другим
+            $positions = $this->basket->products()->count();
+            return view('basket.part.basket', compact('positions'));
         }
-        // в случае ajax-запроса возвращаем html-код корзины в правом
-        // верхнем углу, чтобы заменить исходный html-код, потому что
-        // теперь количество позиций будет другим
-        $positions = $this->basket->products()->count();
-        return view('basket.part.basket', compact('positions'));
     }
 
     /**
@@ -329,9 +333,11 @@ class BasketController extends Controller {
                     $quantity = $item->quantity;
                     $count_lost = $item->product->count_lost;
 
-                    $product = Product::find($item->product->id);
-                    $product->count_lost = $count_lost - $quantity;
-                    $product->update();
+                    if ( $item->product->count != null ) {
+                        $product = Product::find($item->product->id);
+                        $product->count_lost = $count_lost - $quantity;
+                        $product->update();
+                    }
 
                     $finded_bup = BuyedUserProduct::where('product_id', $item->product->id)->where('buyer_id', auth()->user()->id)->first();
 
