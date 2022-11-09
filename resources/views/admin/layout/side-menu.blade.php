@@ -66,6 +66,13 @@
                         </div>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('admin.settings') }}" class="side-menu">
+                        <div class="side-menu__title">
+                            Настройки
+                        </div>
+                    </a>
+                </li>
             </ul>
         </nav>
         <!-- END: Side Menu -->

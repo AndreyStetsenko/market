@@ -210,6 +210,14 @@ Route::group([
 
     Route::get('withdraws', 'WithdrawsAdminController@withdraws')->name('withdraws');
     Route::post('withdraws/success', 'WithdrawsAdminController@withdrawSuccess')->name('withdraw.success');
+
+    // Settings
+    Route::get('settings', 'SettingsController@index')->name('settings');
+    Route::post('settings/clear/products', 'SettingsController@clearProducts')->name('settings.clear.products');
+    Route::post('settings/clear/users', 'SettingsController@clearUsers')->name('settings.clear.users');
+    Route::post('settings/clear/collection', 'SettingsController@clearCollection')->name('settings.clear.collection');
+    Route::post('settings/clear/categories', 'SettingsController@clearCategories')->name('settings.clear.categories');
+    Route::post('settings/clear/images', 'SettingsController@clearImages')->name('settings.clear.images');
 });
 
 Route::get('user/{user}', 'UserController@profile')
