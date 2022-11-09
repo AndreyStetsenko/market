@@ -11,6 +11,8 @@ use App\Models\Collection;
 use App\Models\Category;
 use App\Models\Attachment;
 use App\Models\Attachmentable;
+use App\Models\Order;
+use App\Models\OrderItem;
 
 class SettingsController extends Controller
 {
@@ -43,5 +45,18 @@ class SettingsController extends Controller
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         return back()->with('error', 'Ошибка уничтожения картинок');
+    }
+
+    public function clearOrders(Request $request)
+    {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
+        if ( Order::truncate() && OrderItem::truncate() ) {
+            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+            return back()->with('success', 'Ордеры успешно уничтожены');
+        }
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        return back()->with('error', 'Ошибка уничтожения ордеров');
     }
 }

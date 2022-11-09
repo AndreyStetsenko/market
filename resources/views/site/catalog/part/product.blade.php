@@ -29,11 +29,11 @@
             </div>
             <a href="{{ route('catalog.product', ['product' => $product->slug]) }}">
                 <div class="d-placeholder"></div>
-                @if ($product->image)
-                    @php($url = url('storage/catalog/product/source/' . $product->image))
-                    <img src="{{ $url }}" class="img-fluid lazy nft__item_preview" alt="">
+                @if ($product->attachmentable)
+                    @php($url = url('storage/catalog/product/source/' . $product->attachmentable[0]->attachment->name))
+                    <img src="{{ $url }}" id="get_file_2" class="lazy lazy nft__item_preview" alt="">
                 @else
-                    <img src="https://via.placeholder.com/300x150" class="img-fluid lazy nft__item_preview" alt="">
+                    <img src="{{ asset('site/images/collections/coll-item-3.jpg') }}" id="get_file_2" class="lazy lazy nft__item_preview" alt="">
                 @endif
             </a>
         </div>
@@ -55,6 +55,9 @@
 </div>
 <div class="nft__item_price">
                 {{ $product->price }} USD
+                @if ($count ?? '')
+                    <small class="d-block">Total: {{ $product->price * $count }} USD</small>
+                @endif
             </div>
             <div class="nft__item_action">
                 <a href="{{ route('catalog.product', ['product' => $product->slug]) }}">Смотреть</a>

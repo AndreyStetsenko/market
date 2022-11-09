@@ -15,8 +15,8 @@ class CreateAttachmentableTable extends Migration
     {
         Schema::create('attachmentable', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('attachment_id')->unsigned();;
-            $table->bigInteger('attachmentable_id')->unsigned();;
+            $table->bigInteger('attachment_id')->unsigned();
+            $table->bigInteger('attachmentable_id')->unsigned();
             $table->timestamps();
 
             $table->foreign('attachment_id')

@@ -106,6 +106,23 @@
 
                         <div class="spacer-20"></div>
 
+                        <div class="form-group d-flex">
+                            <div style="width:calc(50% - 10px)">
+                                <h5>Количество</h5>
+                                <input type="text" name="count" id="count" class="form-control" 
+                                        value="{{ old('count') ?? $product->count ?? '' }}" />
+                                <div class="input-error" id="countFirst"></div>
+                            </div>
+                            <div style="width:calc(50% - 10px);margin-left:20px">
+                                <h5>Остаток</h5>
+                                <input type="text" name="count_lost" id="count_lost" class="form-control" 
+                                        value="{{ old('count_lost') ?? $product->count_lost ?? '' }}" />
+                                <div class="input-error" id="countSecond"></div>
+                            </div>
+                        </div>
+
+                        <div class="spacer-20"></div>
+
                         {{-- <h5>Бренд</h5>
                         <div class="form-group">
                             @php
@@ -189,6 +206,31 @@
       $("body").on("click",".btn-danger",function(){ 
           $(this).parents(".control-group").remove();
       });
+
+        const inpCount = document.querySelector('input[name="count"]');
+        const inpCountLost = document.querySelector('input[name="count_lost"]');
+        const countSecond = document.getElementById('countSecond');
+
+        inpCount.addEventListener('input', () => {
+            inpCountLost.value = inpCount.value;
+
+            checkCount();
+        });
+
+        inpCountLost.addEventListener('input', () => {
+            checkCount();
+        });
+
+        function checkCount() {
+            if (inpCountLost.value > inpCount.value) {
+                countSecond.innerHTML = 'Остаток не может привышать количество';
+                // inpCountLost.classList.add('error');
+                countSecond.style.color = '#e7505a';
+            } else {
+                countSecond.innerHTML = '';
+                // inpCountLost.classList.remove('error');
+            }
+        }
     });
 
     // $('.add-images-wrap').sortable({

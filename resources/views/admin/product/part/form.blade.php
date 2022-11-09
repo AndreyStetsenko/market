@@ -78,6 +78,16 @@
                 @endforeach
             </select>
         </div>
+        <div class="mt-3 flex">
+            <div style="width:calc(50% - 10px)">
+                <label class="form-label">Количество</label>
+                <input type="text" name="count" class="form-control w-full" value="{{ old('count') ?? $product->count ?? '' }}" required>
+            </div>
+            <div style="width:calc(50% - 10px);margin-left:20px">
+                <label class="form-label">Остаток</label>
+                <input type="text" name="count_lost" class="form-control w-full" value="{{ old('count_lost') ?? $product->count_lost ?? '' }}" required>
+            </div>
+        </div>
         <div class="mt-3">
             <textarea class="editor" name="content">{{ old('content') ?? $product->content ?? '' }}</textarea>
         </div>
@@ -103,4 +113,12 @@
 
 @section('script')
     <script src="{{ asset('dist/js/ckeditor-classic.js') }}"></script>
+    <script>
+        const inpCount = document.querySelector('input[name="count"]');
+        const inpCountLost = document.querySelector('input[name="count_lost"]');
+
+        inpCount.addEventListener('input', (el) => {
+            inpCountLost.value = inpCount.value;
+        });
+    </script>
 @endsection

@@ -35,13 +35,31 @@
         <form action="{{ route('admin.settings.clear.products') }}" method="post">
             @csrf
 
-            <button class="btn btn-danger" type="submit" onclick="if(confirm('Bы уверены, что хотите уничтожить товары?')) return true; else return false;">Удалить все товары</button>
+            <button class="btn btn-danger" 
+                    type="submit" 
+                    onclick="if(confirm('Bы уверены, что хотите уничтожить товары?')) return true; else return false;">
+                        Удалить все товары
+            </button>
         </form>
 
         <form action="{{ route('admin.settings.clear.images') }}" method="post">
             @csrf
 
-            <button class="btn btn-danger" type="submit" onclick="if(confirm('Bы уверены, что хотите уничтожить картинки?')) return true; else return false;">Удалить все картинки</button>
+            <button class="btn btn-danger" 
+                    type="submit" 
+                    onclick="if(confirm('Bы уверены, что хотите уничтожить картинки?')) return true; else return false;">
+                        Удалить все картинки
+            </button>
+        </form>
+
+        <form action="{{ route('admin.settings.clear.orders') }}" method="post">
+            @csrf
+
+            <button class="btn btn-danger" 
+                    type="submit" 
+                    onclick="if(confirm('Bы уверены, что хотите уничтожить ордеры?')) return true; else return false;">
+                        Удалить все ордеры
+            </button>
         </form>
     </div>
 @endsection

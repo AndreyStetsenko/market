@@ -21,6 +21,8 @@ class Product extends Model {
         'content',
         'image',
         'price',
+        'count',
+        'count_lost',
         'new',
         'hit',
         'sale',
@@ -170,5 +172,10 @@ class Product extends Model {
     public function attachment()
     {
         return $this->belongsTo(Attachmentable::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'creator_id', 'id');
     }
 }

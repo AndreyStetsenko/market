@@ -35,8 +35,8 @@
                     @foreach($products as $product)
                     <li class="act_like">
                         <a href="{{ route('catalog.product', ['product' => $product->slug]) }}">
-                            @if ($product->image != 'avatar.jpeg')
-                                @php($url = url('storage/catalog/product/source/' . $product->image))
+                            @if ($product->attachmentable)
+                                @php($url = url('storage/catalog/product/source/' . $product->attachmentable[0]->attachment->name))
                                 <img src="{{ $url }}" class="lazy" alt="">
                             @else
                                 <img src="{{ asset('site/images/collections/coll-item-3.jpg') }}" id="get_file_2" class="lazy" alt="">

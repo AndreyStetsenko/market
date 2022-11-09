@@ -52,8 +52,8 @@
                                             </div>
                                             <a href="{{ route('catalog.product', ['product' => $product->slug]) }}">
                                                 <div class="d-placeholder"></div>
-                                                @if ($product->image)
-                                                    @php($url = url('storage/catalog/product/source/' . $product->image))
+                                                @if ($product->attachmentable)
+                                                    @php($url = url('storage/catalog/product/source/' . $product->attachmentable[0]->attachment->name))
                                                     <img src="{{ $url }}" class="img-fluid lazy nft__item_preview" alt="">
                                                 @else
                                                     <img src="https://via.placeholder.com/300x150" class="img-fluid lazy nft__item_preview" alt="">

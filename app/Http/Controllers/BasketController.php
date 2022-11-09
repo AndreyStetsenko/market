@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Http;
 use Onetoweb\NOWPayments\Client as NOWPaymentsClient;
 use App\Models\User;
 use App\Models\Wallet;
+use App\Models\Product;
+use App\Models\BuyedUserProduct;
 
 class BasketController extends Controller {
 
@@ -314,17 +316,47 @@ class BasketController extends Controller {
         $my_wallet = $user->getWallet('usdt');
         $recipient_wallet = $recipient->getWallet('usdt');
 
-        if ( $my_wallet->balance >= $sum_transf ) {
-            $my_wallet->transfer($recipient_wallet, $sum_transf);
+        if ( $user->getKey() !== $recipient->getKey() ) {
+            if ( $my_wallet->balance >= $sum_transf ) {
+                $my_wallet->transfer($recipient_wallet, $sum_transf);
 
-            $order = Order::find($request->id);
-            $order->status = 2;
-            $order->invoice = 0;
-            $order->update();
+                $order = Order::find($request->order_id);
+                $order->status = 2;
+                $order->invoice = 0;
+                $order->update();
 
-            return redirect()->back();
+                foreach ($order->items as $item) {
+                    $quantity = $item->quantity;
+                    $count_lost = $item->product->count_lost;
+
+                    $product = Product::find($item->product->id);
+                    $product->count_lost = $count_lost - $quantity;
+                    $product->update();
+
+                    $finded_bup = BuyedUserProduct::where('product_id', $item->product->id)->where('buyer_id', auth()->user()->id)->first();
+
+                    if ($finded_bup) {
+                        $count_old = $finded_bup->count;
+                        $count_new = $count_old + $quantity;
+
+                        $finded_bup->count = $count_new;
+                        $finded_bup->update();
+                    } else {
+                        BuyedUserProduct::create([
+                            'product_id' => $item->product->id,
+                            'buyer_id' => auth()->user()->id,
+                            'creator_id' => $item->product->user->id,
+                            'count' => $quantity
+                        ]);
+                    }
+                }
+
+                return redirect()->back()->with(['success' => 'Успешно оплачено']);
+            } else {
+                return redirect()->back()->with(['error' => 'Недостаточно средств на балансе']);
+            }
         } else {
-            return redirect()->back()->withErrors(['msg' => 'Insufficient funds on the balance sheet']);
+            return redirect()->back()->with(['error' => 'Нельзя купить свой же товар!']);
         }
     }
 }

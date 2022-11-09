@@ -9,6 +9,7 @@ use App\Models\Collection;
 use App\Models\Wallets;
 use App\Helpers\ImageSaver;
 use App\Models\Order;
+use App\Models\BuyedUserProduct;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller {
@@ -112,7 +113,7 @@ class UserController extends Controller {
     public function buyProducts()
     {
         $user = auth()->user();
-        $products = Order::whereUserId($user->id)
+        $products = BuyedUserProduct::where('buyer_id', $user->id)
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 

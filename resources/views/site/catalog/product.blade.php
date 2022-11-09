@@ -96,7 +96,7 @@
                                 <div class="nft-item-price"><span>{{ number_format($product->price, 2, '.', '') }} $</span></div>
                             </div>
                             <div class="ms-5">
-                                <h6>Количество</h6>
+                                <h6>Количество <small style="opacity: .5">max: {{ $product->count_lost }}</small></h6>
                                 <input type="text" name="quantity" id="input-quantity" value="1"
                                     class="form-control mx-2 w-25"
                                     style="height: 34px; text-align: center; margin-top: -5px; margin-left: 0 !important;">

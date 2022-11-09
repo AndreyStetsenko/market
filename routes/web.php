@@ -218,6 +218,7 @@ Route::group([
     Route::post('settings/clear/collection', 'SettingsController@clearCollection')->name('settings.clear.collection');
     Route::post('settings/clear/categories', 'SettingsController@clearCategories')->name('settings.clear.categories');
     Route::post('settings/clear/images', 'SettingsController@clearImages')->name('settings.clear.images');
+    Route::post('settings/clear/orders', 'SettingsController@clearOrders')->name('settings.clear.orders');
 });
 
 Route::get('user/{user}', 'UserController@profile')
