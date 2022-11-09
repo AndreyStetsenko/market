@@ -2,6 +2,10 @@
 
 @section('content')
 
+@php
+    auth()->user()->wallet->refresh
+@endphp
+
 <div id="top"></div>
             
 <!-- section begin -->

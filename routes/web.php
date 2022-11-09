@@ -129,6 +129,7 @@ Route::group([
     Route::get('personal/collections', 'UserController@collections')->name('personal.collections')->middleware('manager');
     Route::get('personal/collection/{collection}', 'UserController@collectionProducts')->name('personal.collection');
     Route::get('personal/orders', 'UserController@orders')->name('personal.orders');
+    Route::get('personal/buy-products', 'UserController@buyProducts')->name('personal.buy-products');
 
     // Referals
     Route::get('personal/referals', 'ReferalsController@userReferals')->name('personal.referals');

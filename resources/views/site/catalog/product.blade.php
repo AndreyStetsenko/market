@@ -12,13 +12,13 @@
                     <div class="swiper-wrapper">
                         @foreach ($product->attachmentable as $item)
                         <div class="swiper-slide">
-                                    <div class="nft-image-wrapper">
-                                    <img src="{{ url('storage/catalog/product/source/' . $item->attachment->name) }}" 
-                                            alt="{{ $product->name }}" 
-                                            data-fancybox="gallery"
-                                            class="img-fluid img-rounded mb-sm-30">
-                                </div>
+                                <div class="nft-image-wrapper">
+                                <img src="{{ url('storage/catalog/product/source/' . $item->attachment->name) }}" 
+                                        alt="{{ $product->name }}" 
+                                        data-fancybox="gallery"
+                                        class="img-fluid img-rounded mb-sm-30">
                             </div>
+                        </div>
                         @endforeach
                     </div>
                 </div>

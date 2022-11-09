@@ -108,5 +108,14 @@ class UserController extends Controller {
 
         return view('site.user.personal.orders', compact('orders', 'statuses', 'user'));
     }
-}
 
+    public function buyProducts()
+    {
+        $user = auth()->user();
+        $products = Order::whereUserId($user->id)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        return view('site.user.personal.buy-products', compact('products', 'user'));
+    }
+}
