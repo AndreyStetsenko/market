@@ -41,7 +41,9 @@ class AppServiceProvider extends ServiceProvider {
             return ! auth()->check() && auth()->user()->admin;
         });
 
-        $pages = Page::all();
-        view()->share('pages', $pages);
+        if(\Schema::hasTable('pages')) {
+            $pages = Page::all();
+            view()->share('pages', $pages);
+        }
     }
 }
