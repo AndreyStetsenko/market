@@ -68,7 +68,7 @@
                         <div class="form-group">
                             <h5>Название</h5>
                             <input type="text" name="name" id="name" class="form-control" placeholder="e.g. 'Crypto Funk"
-                                    required maxlength="100" value="{{ old('name') ?? $product->name ?? '' }}" />
+                                    required maxlength="100" value="{{ old('name') ?? $product->name ?? '' }}" {{ $is_resell == 1 ? 'disabled' : '' }}/>
                             <div class="input-error"></div>
                         </div>
 
@@ -77,7 +77,7 @@
                         <div class="form-group price">
                             <h5>Цена</h5>
                             <input type="text" name="price" id="price" class="form-control" placeholder="25.00 $" 
-                                    required value="{{ old('price') ?? $product->price ?? '' }}"/>
+                                    required value="{{ old('price') ?? $product->price ?? '' }}" {{ $is_resell == 1 ? 'disabled' : '' }}/>
                             <div class="el-price">$</div>
                             <div class="input-error"></div>
                         </div>
@@ -124,38 +124,46 @@
 
                         <div class="form-group">
                             <h5>Категория</h5>
-                            @php
-                                $category_id = old('category_id') ?? $product->category_id ?? 0;
-                            @endphp
-                            <select name="category_id" class="form-control" title="Категория" required>
-                                <option value="">Выберите</option>
-                                @if (count($items))
-                                    @include('admin.product.part.branch', ['level' => -1, 'parent' => 0])
-                                @endif
-                            </select>
-                            <div class="input-error"></div>
+                            @if ($items ?? '')
+                                @php
+                                    $category_id = old('category_id') ?? $product->category_id ?? 0;
+                                @endphp
+                                <select name="category_id" class="form-control" title="Категория" required>
+                                    <option value="">Выберите</option>
+                                    @if (count($items))
+                                        @include('admin.product.part.branch', ['level' => -1, 'parent' => 0])
+                                    @endif
+                                </select>
+                                <div class="input-error"></div>
+                            @else
+                                <input type="text" name="category_id" class="form-control" value="{{ $product->category?->name ?? '-' }}" disabled>
+                            @endif
                         </div>
 
                         <div class="spacer-20"></div>
 
                         <div class="form-group">
                             <h5>Коллекция</h5>
-                            <select name="collection_id" class="form-control" title="Коллекция" required>
-                                <option value="">Выберите</option>
-                                @foreach($collections as $collection)
-                                    <option value="{{ $collection->id }}" @if ($collection->id == $product->collection_id) selected @endif>
-                                        {{ $collection->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            <div class="input-error"></div>
+                            @if ($collections ?? '')
+                                <select name="collection_id" class="form-control" title="Коллекция" required>
+                                    <option value="">Выберите</option>
+                                    @foreach($collections as $collection)
+                                        <option value="{{ $collection->id }}" @if ($collection->id == $product->collection_id) selected @endif>
+                                            {{ $collection->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <div class="input-error"></div>
+                            @else
+                                <input type="text" name="category_id" class="form-control" value="{{ $product->collection?->name ?? '-' }}" disabled>
+                            @endif
                         </div>
 
                         <div class="spacer-20"></div>
 
                         <div class="form-group">
                             <h5>Описание</h5>
-                            <textarea data-autoresize name="content" id="item_desc" class="form-control" placeholder="e.g. 'This is very limited item'">{!! old('content') ?? $product->content ?? '' !!}</textarea>
+                            <textarea data-autoresize name="content" id="item_desc" class="form-control" placeholder="e.g. 'This is very limited item'" {{ $is_resell == 1 ? 'disabled' : '' }}>{!! old('content') ?? $product->content ?? '' !!}</textarea>
                             <div class="input-error"></div>
                         </div>
 

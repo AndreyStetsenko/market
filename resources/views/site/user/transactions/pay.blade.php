@@ -72,6 +72,15 @@
             
                         </div>
                     </div>
+
+                    {{-- <form action="{{ route('user.refill.cancel') }}" method="post">
+                        @csrf
+                        <input type="hidden" name="id" value="{{ $item->id }}">
+                        <input type="hidden" name="txn_id" value="{{ $item->txn_id }}">
+
+                        <button class="btn-main d-block w-100 mt-5">Отмена платежа</button>
+                    </form> --}}
+                    <a href="{{ route('user.wallet') }}" class="btn-main d-block w-100 mt-2">Обратно в кошелек</a>
                     
                 </div>
             </div>
@@ -119,7 +128,6 @@
         }
     </style>
 
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <script>
         function progress(timeleft, timetotal, $element) {
             var progressBarWidth = timeleft * $element.width() / timetotal;

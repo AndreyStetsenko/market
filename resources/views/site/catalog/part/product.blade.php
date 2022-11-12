@@ -54,14 +54,32 @@
     <span></span>
 </div>
 <div class="nft__item_price">
-                {{ $product->price }} USD
-                @if ($count ?? '')
-                    <small class="d-block">Total: {{ $product->price * $count }} USD</small>
+                @if ($resell ?? '')
+                    {{ $resell_product->price }} USD
+                    @if ($resell_product->count ?? '')
+                        <small class="d-block">Total: {{ $resell_product->price * $resell_product->count }} USD</small>
+                    @endif
+                @else
+                    {{ $product->price }} USD
+                    @if ($count ?? '')
+                        <small class="d-block">Total: {{ $product->price * $count }} USD</small>
+                    @endif
                 @endif
             </div>
             <div class="nft__item_action">
                 <a href="{{ route('catalog.product', ['product' => $product->slug]) }}">Смотреть</a>
             </div>
+            @if ($sell ?? '')
+            <div class="nft__item_action">
+                {{-- <a href="{{ route('user.personal.sell-product.create', $product->slug) }}">На продажу</a> --}}
+                <a data-bs-toggle="modal" href="#modalToSell" role="button" data-product-id="{{ $product->id }}" class="get_product_mini_info">На продажу</a>
+            </div>
+            @endif
+            @if ($resell ?? '')
+            <div class="nft__item_action">
+                <a href="{{ route('user.personal.sell-product.edit', $product->slug) }}">Редактировать</a>
+            </div>
+            @endif
         </div> 
     </div>
 </div>

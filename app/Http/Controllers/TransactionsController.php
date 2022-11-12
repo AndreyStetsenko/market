@@ -263,4 +263,66 @@ class TransactionsController extends Controller
 
         return response()->json($status);
     }
+
+    public function cancel(Request $request)
+    {
+        $private_key = env('CP_PRIVATE', '');
+        $public_key = env('CP_PUBLIC', '');
+
+        // Set the API command and required fields
+        $req['cmd'] = 'cancel_withdrawal';
+        $req['id'] = $request->txn_id;
+        $req['key'] = $public_key;
+        $req['format'] = 'json'; //supported values are json and xml
+
+        // Generate the query string
+        $post_data = http_build_query($req, '', '&');
+
+        // Calculate the HMAC signature on the POST data
+        $hmac = hash_hmac('sha512', $post_data, $private_key);
+
+        // Create cURL handle and initialize (if needed)
+        static $ch = NULL;
+        if ($ch === NULL) {
+            $ch = curl_init('https://www.coinpayments.net/api.php');
+            curl_setopt($ch, CURLOPT_FAILONERROR, TRUE);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        }
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('HMAC: '.$hmac));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+
+        // Execute the call and close cURL handle
+        $data = curl_exec($ch);
+        // $data = json_decode($data);
+        // dd($data->result->qrcode_url);
+        // Parse and return data if successful.
+        if ($data !== FALSE) {
+            if (PHP_INT_SIZE < 8 && version_compare(PHP_VERSION, '5.4.0') >= 0) {
+                // We are on 32-bit PHP, so use the bigint as string option. If you are using any API calls with Satoshis it is highly NOT recommended to use 32-bit PHP
+                $dec = json_decode($data, TRUE, 512, JSON_BIGINT_AS_STRING);
+            } else {
+                $dec = json_decode($data);
+                dd($dec->error);
+
+                // if ($dec->error) return back();
+
+                $item = Transaction::find($request->id);
+                // $status = $request->status;
+                $status = '-1';
+
+                $item->confirmed = $status;
+                $item->update();
+
+                return back();
+            }
+            if ($dec !== NULL && count($dec)) {
+                return $dec;
+            } else {
+                // If you are using PHP 5.5.0 or higher you can use json_last_error_msg() for a better error message
+                return array('error' => 'Unable to parse JSON result ('.json_last_error().')');
+            }
+        } else {
+            return array('error' => 'cURL error: '.curl_error($ch));
+        }
+    }
 }

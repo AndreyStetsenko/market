@@ -121,15 +121,21 @@ Route::group([
     'prefix' => 'user', // префикс маршрута, например user/index
     'middleware' => ['auth'] // один или несколько посредников
 ], function () {
-    // главная страница личного кабинета пользователя
-    Route::get('index', 'UserController@index')->name('index');
+    // Личный кабинет
+    Route::get('index', 'UserController@index')->name('index'); // Главная страница личного кабинета пользователя
     Route::get('edit', 'UserController@edit')->name('edit');
     Route::post('update', 'UserController@update')->name('update');
     Route::get('personal', 'UserController@personal')->name('personal')->middleware('manager');
     Route::get('personal/collections', 'UserController@collections')->name('personal.collections')->middleware('manager');
     Route::get('personal/collection/{collection}', 'UserController@collectionProducts')->name('personal.collection');
     Route::get('personal/orders', 'UserController@orders')->name('personal.orders');
-    Route::get('personal/buy-products', 'UserController@buyProducts')->name('personal.buy-products');
+    // ***** / ***** //
+    Route::get('personal/buy-products', 'UserController@buyProducts')->name('personal.buy-products'); // Купленные товары юзера
+    Route::get('personal/sell-products', 'UserController@resellProducts')->name('personal.sell-products'); // Товары юзера выставленные на перепродажу
+    Route::get('personal/sell-product/create/{slug}', 'UserController@resellProductCreate')->name('personal.sell-product.create'); // Создание заявки на перепродажу товара
+    Route::post('personal/sell-product/store', 'UserController@resellProductStore')->name('personal.sell-product.store');
+    Route::get('personal/sell-product/edit/{slug}', 'UserController@resellProductEdit')->name('personal.sell-product.edit'); // Редактирование заявки на перепродажу товара
+    Route::post('personal/sell-product/update', 'UserController@resellProductUpdate')->name('personal.sell-product.update');
 
     // Referals
     Route::get('personal/referals', 'ReferalsController@userReferals')->name('personal.referals');
@@ -167,6 +173,7 @@ Route::group([
     Route::get('refill/pay/{uuid}', 'TransactionsController@pay')->name('refill.pay');
     Route::post('refill/check', 'TransactionsController@check')->name('refill.check');
     Route::post('refill/update', 'TransactionsController@update')->name('refill.update');
+    Route::post('refill/cancel', 'TransactionsController@cancel')->name('refill.cancel');
 });
 
 Route::get('collection/{collection}', 'CollectionController@show')->name('collection.show');
@@ -223,6 +230,10 @@ Route::group([
 
 Route::get('user/{user}', 'UserController@profile')
         ->name('user.profile');
+
+// API (недоапи)
+Route::get('pitem/{id}', 'ProductController@getProduct')
+        ->name('product.get');
 
 // Payments
 // Route::match(['get', 'post'], '/payments/crypto/pay', [CryptoPaymentController::class])

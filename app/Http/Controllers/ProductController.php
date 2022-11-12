@@ -12,6 +12,7 @@ use App\Models\Collection;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\BuyedUserProduct;
 use App\Models\Basket;
 use App\Models\Attachment;
 use App\Models\Attachmentable;
@@ -243,5 +244,17 @@ class ProductController extends Controller
         return redirect()
             ->route('user.personal')
             ->with('success', 'Товар каталога успешно удален');
+    }
+
+    public function getProduct(Request $request, $id)
+    {
+        $user = auth()->user();
+        $productBuy = BuyedUserProduct::where('buyer_id', $user->id)->where('product_id', $id)->first();
+        $product = Product::find($productBuy->product_id);
+
+        return response([
+            'productBuy' => $productBuy,
+            'product' => $product
+        ]);
     }
 }

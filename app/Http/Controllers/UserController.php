@@ -10,6 +10,7 @@ use App\Models\Wallets;
 use App\Helpers\ImageSaver;
 use App\Models\Order;
 use App\Models\BuyedUserProduct;
+use App\Models\UserResellProduct;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller {
@@ -115,8 +116,55 @@ class UserController extends Controller {
         $user = auth()->user();
         $products = BuyedUserProduct::where('buyer_id', $user->id)
             ->orderBy('created_at', 'desc')
-            ->paginate(10);
+            ->paginate(12);
 
         return view('site.user.personal.buy-products', compact('products', 'user'));
+    }
+
+    public function resellProducts()
+    {
+        $user = auth()->user();
+        $products = UserResellProduct::where('creator_id', $user->id)
+            ->orderBy('created_at', 'desc')
+            ->paginate(12);
+
+        return view('site.user.personal.selling-products', compact('products', 'user'));
+    }
+
+    public function resellProductCreate(Request $request, $slug)
+    {
+        $is_resell = 1;
+        $product = Product::where('slug', $slug)->first();
+
+        return view('site.user.product.edit', compact('product', 'is_resell'));
+    }
+
+    public function resellProductStore(Request $request)
+    {
+        UserResellProduct::create([
+            'creator_id' => $request->creator_id,
+            'product_id' => $request->product_id,
+            'count' => $request->count,
+            'price' => $request->price,
+            'currency' => $request->currency,
+        ]);
+
+        $buy_product = BuyedUserProduct::where('buyer_id', $request->creator_id)->where('product_id', $request->product_id)->first();
+        $all_count = $buy_product->count;
+        $new_cont = $all_count - $request->count;
+        $buy_product->count = $new_cont;
+        $buy_product->update();
+
+        return redirect()->route('user.personal.sell-products')->with('success', 'Товар выставлен на продажу');
+    }
+
+    public function resellProductEdit()
+    {
+
+    }
+
+    public function resellProductUpdate()
+    {
+        
     }
 }
