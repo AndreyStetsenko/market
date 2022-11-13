@@ -2,53 +2,88 @@
 
 @section('content')
 
-<div id="top"></div>
-    <section id="section-hero" aria-label="section" class="pt20 pb20 vh-100" data-bgimage="url({{ asset('site/images/background/8.jpg') }}) bottom">
-        <div id="particles-js"></div>
+    <div id="top"></div>
+    <section id="section-hero" aria-label="section" class="pt20 pb20 vh-100" data-bgimage="url({{ asset('site/images/background/7.jpg') }}) bottom">
         <div class="v-center">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-md-6">
                         <div class="spacer-single"></div>
-                        <h6 class="wow fadeInUp" data-wow-delay=".5s"><span class="text-uppercase id-color-2">HashMarket</span></h6>
+                        <h6 class="wow fadeInUp" data-wow-delay=".5s"><span class="text-uppercase id-color-2">Gigaland Market</span></h6>
                         <div class="spacer-10"></div>
-                        <h1 class="wow fadeInUp" data-wow-delay=".75s">Создавай и продавай свою продукцию</h1>
+                        <h1 class="wow fadeInUp" data-wow-delay=".75s">Discover rare <span class="id-color-2">artworks</span> by world class artists</h1>
                         <p class="wow fadeInUp lead" data-wow-delay="1s">
-                        Маркетпоейс в котором ты можешь продать любой свой продукт и заработать на этом!</p>
+                        Unit of data stored on a digital ledger, called a blockchain, that certifies a digital asset to be unique and therefore not interchangeable</p>
                         <div class="spacer-10"></div>
-                        @guest
-                            <a href="{{ route('user.login') }}" class="btn-main wow fadeInUp lead" data-wow-delay="1.25s">Начать</a>
-                        @else
-                            <a href="{{ route('user.create.option') }}" class="btn-main wow fadeInUp lead" data-wow-delay="1.25s">Начать</a>
-                        @endif
-                        <div class="row">
-                            <div class="spacer-single"></div>
-                            <div class="row">
-                                    <div class="col-lg-4 col-md-6 col-sm-4 wow fadeInRight mb30" data-wow-delay="1.1s">
-                                        <div class="de_count text-left">
-                                            <h3><span>{{ count($collections) }}</span></h3>
-                                            <h5 class="id-color">Коллекций</h5>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-4 col-md-6 col-sm-4 wow fadeInRight mb30" data-wow-delay="1.4s">
-                                        <div class="de_count text-left">
-                                            <h3>{{ count($users) }}</h3>
-                                            <h5 class="id-color">Пользователей</h5>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-4 col-md-6 col-sm-4 wow fadeInRight mb30" data-wow-delay="1.7s">
-                                        <div class="de_count text-left">
-                                            <h3>{{ $count_prod }}</h3>
-                                            <h5 class="id-color">Товаров</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                        </div>
+                        <a href="03_grey-explore.html" class="btn-main wow fadeInUp lead" data-wow-delay="1.25s">Explore</a>
+                        <div class="mb-sm-30"></div>
                     </div>
                     <div class="col-md-6 xs-hide">
-                        <img src="{{ asset('site/images/misc/women-with-vr.png') }}" class="img-fluid wow fadeInUp" data-wow-delay=".75s" alt="">
+                        <div class="d-carousel">
+                            <div id="item-carousel-big-type-2" class="owl-carousel wow fadeIn">
+                                <div class="nft_pic style-2">                            
+                                    <a href="03_grey-item-details.html">
+                                        <span class="nft_pic_info">
+                                            <span class="nft_pic_title">Live Arts</span>
+                                            <span class="nft_pic_by">Nicholas Daniels</span>
+                                        </span>
+                                    </a>
+                                    <div class="nft_pic_wrap">
+                                        <img src="{{ asset('site/images/carousel/crs-5.jpg') }}" class="lazy img-fluid" alt="">
+                                    </div>
+                                </div>  
+                                
+                                <div class="nft_pic style-2">                            
+                                    <a href="03_grey-item-details.html">
+                                        <span class="nft_pic_info">
+                                            <span class="nft_pic_title">Red Ocean</span>
+                                            <span class="nft_pic_by">Monica Lucas</span>
+                                        </span>
+                                    </a>
+                                    <div class="nft_pic_wrap">
+                                        <img src="{{ asset('site/images/carousel/crs-4.jpg') }}" class="lazy img-fluid" alt="">
+                                    </div>
+                                </div>
+
+                                <div class="nft_pic style-2">                            
+                                    <a href="03_grey-item-details.html">
+                                        <span class="nft_pic_info">
+                                            <span class="nft_pic_title">Glass Cube</span>
+                                            <span class="nft_pic_by">Mamie Barnett</span>
+                                        </span>
+                                    </a>
+                                    <div class="nft_pic_wrap">
+                                        <img src="{{ asset('site/images/carousel/crs-1.jpg') }}" class="lazy img-fluid" alt="">
+                                    </div>
+                                </div>
+                                
+                                <div class="nft_pic style-2">                            
+                                    <a href="03_grey-item-details.html">
+                                        <span class="nft_pic_info">
+                                            <span class="nft_pic_title">Loop Donut</span>
+                                            <span class="nft_pic_by">Lori Hart</span>
+                                        </span>
+                                    </a>
+                                    <div class="nft_pic_wrap">
+                                        <img src="{{ asset('site/images/items/anim-5.webp') }}" class="lazy img-fluid" alt="">
+                                    </div>
+                                </div>
+
+                                <div class="nft_pic style-2">                            
+                                    <a href="03_grey-item-details.html">
+                                        <span class="nft_pic_info">
+                                            <span class="nft_pic_title">I Believe I Can Fly</span>
+                                            <span class="nft_pic_by">Fred Ryan</span>
+                                        </span>
+                                    </a>
+                                    <div class="nft_pic_wrap">
+                                        <img src="{{ asset('site/images/items/anim-8.webp') }}" class="lazy img-fluid" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                                <div class="d-arrow-left"><i class="fa fa-angle-left"></i></div>
+                                <div class="d-arrow-right"><i class="fa fa-angle-right"></i></div>
+                        </div>
                     </div>
                 </div>
             </div>
