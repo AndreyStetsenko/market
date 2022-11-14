@@ -9,77 +9,33 @@
                 <div class="row align-items-center">
                     <div class="col-md-6">
                         <div class="spacer-single"></div>
-                        <h6 class="wow fadeInUp" data-wow-delay=".5s"><span class="text-uppercase id-color-2">Gigaland Market</span></h6>
+                        <h6 class="wow fadeInUp" data-wow-delay=".5s"><span class="text-uppercase id-color-2">Bitcore Market</span></h6>
                         <div class="spacer-10"></div>
                         <h1 class="wow fadeInUp" data-wow-delay=".75s">Discover rare <span class="id-color-2">artworks</span> by world class artists</h1>
                         <p class="wow fadeInUp lead" data-wow-delay="1s">
                         Unit of data stored on a digital ledger, called a blockchain, that certifies a digital asset to be unique and therefore not interchangeable</p>
                         <div class="spacer-10"></div>
-                        <a href="03_grey-explore.html" class="btn-main wow fadeInUp lead" data-wow-delay="1.25s">Explore</a>
+                        <a href="#" class="btn-main wow fadeInUp lead" data-wow-delay="1.25s">Explore</a>
                         <div class="mb-sm-30"></div>
                     </div>
                     <div class="col-md-6 xs-hide">
                         <div class="d-carousel">
                             <div id="item-carousel-big-type-2" class="owl-carousel wow fadeIn">
-                                <div class="nft_pic style-2">                            
-                                    <a href="03_grey-item-details.html">
-                                        <span class="nft_pic_info">
-                                            <span class="nft_pic_title">Live Arts</span>
-                                            <span class="nft_pic_by">Nicholas Daniels</span>
-                                        </span>
-                                    </a>
-                                    <div class="nft_pic_wrap">
-                                        <img src="{{ asset('site/images/carousel/crs-5.jpg') }}" class="lazy img-fluid" alt="">
-                                    </div>
-                                </div>  
-                                
-                                <div class="nft_pic style-2">                            
-                                    <a href="03_grey-item-details.html">
-                                        <span class="nft_pic_info">
-                                            <span class="nft_pic_title">Red Ocean</span>
-                                            <span class="nft_pic_by">Monica Lucas</span>
-                                        </span>
-                                    </a>
-                                    <div class="nft_pic_wrap">
-                                        <img src="{{ asset('site/images/carousel/crs-4.jpg') }}" class="lazy img-fluid" alt="">
-                                    </div>
-                                </div>
 
+                                @foreach ($hit as $item)
                                 <div class="nft_pic style-2">                            
-                                    <a href="03_grey-item-details.html">
+                                    <a href="{{ route('catalog.product', ['product' => $item->slug]) }}">
                                         <span class="nft_pic_info">
-                                            <span class="nft_pic_title">Glass Cube</span>
-                                            <span class="nft_pic_by">Mamie Barnett</span>
+                                            <span class="nft_pic_title">{{ $item->name }}</span>
+                                            <span class="nft_pic_by">{{ $item->user->name }}</span>
                                         </span>
                                     </a>
                                     <div class="nft_pic_wrap">
-                                        <img src="{{ asset('site/images/carousel/crs-1.jpg') }}" class="lazy img-fluid" alt="">
+                                        <img src="{{ url('storage/catalog/product/source/' . $item->attachmentable[0]->attachment->name) }}" class="lazy img-fluid" alt="">
                                     </div>
                                 </div>
+                                @endforeach
                                 
-                                <div class="nft_pic style-2">                            
-                                    <a href="03_grey-item-details.html">
-                                        <span class="nft_pic_info">
-                                            <span class="nft_pic_title">Loop Donut</span>
-                                            <span class="nft_pic_by">Lori Hart</span>
-                                        </span>
-                                    </a>
-                                    <div class="nft_pic_wrap">
-                                        <img src="{{ asset('site/images/items/anim-5.webp') }}" class="lazy img-fluid" alt="">
-                                    </div>
-                                </div>
-
-                                <div class="nft_pic style-2">                            
-                                    <a href="03_grey-item-details.html">
-                                        <span class="nft_pic_info">
-                                            <span class="nft_pic_title">I Believe I Can Fly</span>
-                                            <span class="nft_pic_by">Fred Ryan</span>
-                                        </span>
-                                    </a>
-                                    <div class="nft_pic_wrap">
-                                        <img src="{{ asset('site/images/items/anim-8.webp') }}" class="lazy img-fluid" alt="">
-                                    </div>
-                                </div>
                             </div>
                                 <div class="d-arrow-left"><i class="fa fa-angle-left"></i></div>
                                 <div class="d-arrow-right"><i class="fa fa-angle-right"></i></div>
