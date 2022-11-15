@@ -2164,7 +2164,8 @@ select{
     --tw-ring-color: rgb(var(--color-primary) / var(--tw-ring-opacity));
     --tw-ring-opacity: 0.2;
 }
-.dark .form-control{
+.dark .form-control,
+.dark .select2-selection--multiple{
     border-color: transparent;
     --tw-bg-opacity: 1;
     background-color: rgb(var(--color-darkmode-800) / var(--tw-bg-opacity));
@@ -18004,4 +18005,22 @@ html body{
         --tw-text-opacity: 1;
         color: rgb(var(--color-success) / var(--tw-text-opacity));
     }
+}
+
+.dark .select2-container--default .select2-selection--multiple .select2-selection__choice {
+    height: 100%;
+    background-color: #2b2b2b;
+    border: 1px solid #3a3a3a;
+}
+
+.dark .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+    border-right: 1px solid #3a3a3a;
+}
+
+.dark .select2-dropdown {
+    background-color: #222c45;
+}
+
+.dark .select2-container--default .select2-results__option--selected {
+    background-color: #1b2437;
 }

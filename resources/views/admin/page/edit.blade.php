@@ -48,7 +48,7 @@
 
                                     @foreach ($item->parent as $inp)
                                         <div class="flex mt-3" id="meta-{{ $inp->id }}">
-                                            <input type="text" class="form-control" placeholder="Имя" value="{{ $inp->name }}" disabled>
+                                            <input type="text" class="form-control mr-2" placeholder="Имя" value="{{ $inp->name }}" disabled>
                                             <input type="hidden" name="name[]" value="{{ $inp->name }}">
                                             @switch($inp->field_type)
                                                 @case('string')
@@ -59,6 +59,21 @@
                                                     @break
                                                 @case('img')
                                                     <input type="file" name="val[]" class="form-control ml-2" placeholder="Значение">
+                                                    @break
+                                                @case('products')
+                                                    @php
+                                                        $vals = explode(',', $inp->value)
+                                                    @endphp
+                                                    <select class="js-example-basic-multiple form-control" name="products[]" multiple="">
+                                                        @foreach ($products as $pitem)
+                                                            @php $vselect = ''; @endphp
+                                                            @if (in_array($pitem->id, $vals))
+                                                                @php $vselect = 'selected'; @endphp
+                                                            @endif
+                                                            <option value="{{ $pitem->id }}" {{ $vselect }}>{{ $pitem->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <input type="hidden" name="val[]" value="products">
                                                     @break
                                                 @default
                                                     <input type="text" name="val[]" class="form-control ml-2" placeholder="Значение" value="{{ $inp->value }}">
@@ -110,12 +125,18 @@
         $('.create-field').on('click', () => {
             setTimeout(() => {
                 $(document).ready(function() {
-                    $('.js-example-basic-multiple').select2({
-                        tags: true,
-    tokenSeparators: [',', ' ']
-                    });
+                    isSelect();
                 });
             }, 1);
         });
+
+        isSelect();
+
+        function isSelect() {
+            $('.js-example-basic-multiple').select2({
+                tags: true,
+                tokenSeparators: [',', ' ']
+            });
+        }
     </script>
 @endpush

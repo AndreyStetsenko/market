@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Events\CreatePageEvent;
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use App\Models\Page;
 use App\Models\PagesMeta;
 use Illuminate\Http\Request;
@@ -73,8 +74,9 @@ class PageController extends Controller {
         $parents = Page::where('parent_id', 0)->get();
         $title = 'Редактирование страницы';
         $meta = PagesMeta::where('page_id', $page->id)->where('field_type', 'admin_tab')->get();
+        $products = Product::all();
 
-        return view('admin.page.edit', compact('page', 'parents', 'title', 'meta'));
+        return view('admin.page.edit', compact('page', 'parents', 'title', 'meta', 'products'));
     }
 
     /**
@@ -242,7 +244,13 @@ class PageController extends Controller {
                 $createdMeta = PagesMeta::find($request->id[$i]);
 
                 if ($request->val[$i] != $createdMeta->value) {
-                    $createdMeta->value = $request->val[$i];
+                    if ($request->field_type[$i] == 'products') {
+                        $resValue = implode(',',$request->products);
+                    } else {
+                        $resValue = $request->val[$i];
+                    }
+
+                    $createdMeta->value = $resValue;
                     $createdMeta->update();
                 }
             } else {
