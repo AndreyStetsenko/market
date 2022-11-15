@@ -257,4 +257,13 @@ class ProductController extends Controller
             'product' => $product
         ]);
     }
+
+    public function getProducts(Request $request)
+    {
+        $products = Product::all();
+
+        return response()->json([
+            'products' => $products
+        ]);
+    }
 }

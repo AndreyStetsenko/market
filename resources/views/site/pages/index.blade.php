@@ -9,9 +9,9 @@
                 <div class="row align-items-center">
                     <div class="col-md-6">
                         <div class="spacer-single"></div>
-                        <h6 class="wow fadeInUp" data-wow-delay=".5s"><span class="text-uppercase id-color-2">Bitcore Market</span></h6>
+                        <h6 class="wow fadeInUp" data-wow-delay=".5s"><span class="text-uppercase id-color-2">{{ $page->custom_field('title_mini') }}</span></h6>
                         <div class="spacer-10"></div>
-                        <h1 class="wow fadeInUp" data-wow-delay=".75s">Discover rare <span class="id-color-2">artworks</span> by world class artists</h1>
+                        <h1 class="wow fadeInUp" data-wow-delay=".75s">{{ $page->custom_field('title_main') }}</h1>
                         <p class="wow fadeInUp lead" data-wow-delay="1s">
                         Unit of data stored on a digital ledger, called a blockchain, that certifies a digital asset to be unique and therefore not interchangeable</p>
                         <div class="spacer-10"></div>
@@ -22,7 +22,7 @@
                         <div class="d-carousel">
                             <div id="item-carousel-big-type-2" class="owl-carousel wow fadeIn">
 
-                                @foreach ($hit as $item)
+                                @foreach ($page->custom_field('head_products', 'products') as $item)
                                 <div class="nft_pic style-2">                            
                                     <a href="{{ route('catalog.product', ['product' => $item->slug]) }}">
                                         <span class="nft_pic_info">

@@ -1,7 +1,5 @@
 @extends('admin.layout.side-menu')
 
-{{ $title = 'Создание новой страницы' }}
-
 @section('subhead')
     <title>{{ $title }}</title>
 @endsection

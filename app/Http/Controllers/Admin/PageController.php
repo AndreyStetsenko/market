@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Events\CreatePageEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Page;
+use App\Models\PagesMeta;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Event;
@@ -28,7 +29,9 @@ class PageController extends Controller {
      */
     public function create() {
         $parents = Page::where('parent_id', 0)->get();
-        return view('admin.page.create', compact('parents'));
+        $title = 'Создание новой страницы';
+        
+        return view('admin.page.create', compact('parents', 'title'));
     }
 
     /**
@@ -42,7 +45,7 @@ class PageController extends Controller {
             'name' => 'required|max:100',
             'parent_id' => 'required|regex:~^[0-9]+$~',
             'slug' => 'required|max:100|unique:pages|regex:~^[-_a-z0-9]+$~i',
-            'content' => 'required',
+            'content' => '',
         ]);
         $page = Page::create($request->all());
         return redirect()
@@ -68,7 +71,10 @@ class PageController extends Controller {
      */
     public function edit(Page $page) {
         $parents = Page::where('parent_id', 0)->get();
-        return view('admin.page.edit', compact('page', 'parents'));
+        $title = 'Редактирование страницы';
+        $meta = PagesMeta::where('page_id', $page->id)->where('field_type', 'admin_tab')->get();
+
+        return view('admin.page.edit', compact('page', 'parents', 'title', 'meta'));
     }
 
     /**
@@ -82,8 +88,8 @@ class PageController extends Controller {
         $this->validate($request, [
             'name' => 'required|max:100',
             'parent_id' => 'required|regex:~^[0-9]+$~|not_in:'.$page->id,
-            'slug' => 'required|max:100|unique:pages,slug,'.$page->id.',id|regex:~^[-_a-z0-9]+$~i',
-            'content' => 'required',
+            'slug' => 'required|max:100|unique:pages,slug,'.$page->id.',id|regex:~^[-_a-z0-9/]+$~i',
+            'content' => '',
         ]);
         $page->update($request->all());
         return redirect()
@@ -193,6 +199,80 @@ class PageController extends Controller {
                 }
             }
         }
+    }
+
+    public function addCustom(Request $request)
+    {
+        function createUrlSlug($urlString)
+        {
+            $slug = preg_replace('/[^A-Za-z0-9-]+/', '_', $urlString);
+            $slugMin = strtolower($slug);
+            return $slugMin;
+        }
+
+        $name = $request->name;
+        $slug = createUrlSlug($request->name);
+        $type = $request->type;
+
+        $data = [
+            'page_id' => $request->page_id,
+            'name' => $slug,
+            'value' => $name,
+            'field_type' => $request->field_type
+        ];
+
+        PagesMeta::create($data);
+
+        return back();
+    }
+
+    public function addCustomFields(Request $request)
+    {
+        function createUrlSlug($urlString)
+        {
+            $slug = preg_replace('/[^A-Za-z0-9-]+/', '_', $urlString);
+            $slugMin = strtolower($slug);
+            return $slugMin;
+        }
+
+        // dd($request);
+
+        foreach ($request->name as $i => $item) {
+            if ($request->id[$i] != 0) {
+                $createdMeta = PagesMeta::find($request->id[$i]);
+
+                if ($request->val[$i] != $createdMeta->value) {
+                    $createdMeta->value = $request->val[$i];
+                    $createdMeta->update();
+                }
+            } else {
+
+                if ($request->field_type[$i] == 'products') {
+                    $resValue = implode(',',$request->products);
+                } else {
+                    $resValue = $request->val[$i];
+                }
+
+                $data = [
+                    'page_id' => $request->page_id,
+                    'name' => createUrlSlug($request->name[$i]),
+                    'value' => $resValue,
+                    'parent_id' => $request->parent_id,
+                    'field_type' => $request->field_type[$i]
+                ];
+    
+                PagesMeta::create($data);
+            }
+        }
+
+        return back();
+    }
+
+    public function removeCustomFields(Request $request, $id)
+    {
+        PagesMeta::destroy($id);
+        
+        return response()->json('Ok');
     }
 
     /**

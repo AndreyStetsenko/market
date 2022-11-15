@@ -211,6 +211,13 @@ Route::group([
     // загрузка изображения из wysiwyg-редактора
     Route::post('page/upload/image', 'PageController@uploadImage')
         ->name('page.upload.image');
+    //  Добавление кастомных полей
+    Route::post('page/add/custom-field', 'PageController@addCustom')
+        ->name('page.custom.add');
+    Route::post('page/add/custom-fields', 'PageController@addCustomFields')
+        ->name('page.custom-field.add');
+    Route::post('page/remove/custom-fields/{id}', 'PageController@removeCustomFields')
+        ->name('page.custom-field.remove');
     // удаление изображения в wysiwyg-редакторе
     Route::delete('page/remove/image', 'PageController@removeImage')
         ->name('page.remove.image');
@@ -233,7 +240,9 @@ Route::get('user/{user}', 'UserController@profile')
 
 // API (недоапи)
 Route::get('pitem/{id}', 'ProductController@getProduct')
-        ->name('product.get');
+    ->name('product.get');
+Route::get('products/get', 'ProductController@getProducts')
+    ->name('products.get');
 
 // Payments
 // Route::match(['get', 'post'], '/payments/crypto/pay', [CryptoPaymentController::class])

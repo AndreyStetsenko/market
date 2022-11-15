@@ -31,4 +31,14 @@ class Page extends Model {
     public function parent() {
         return $this->belongsTo(Page::class);
     }
+
+    public function custom_field($name, $type = null) {
+        if ( $type == 'products' ) {
+            $items = $this->belongsTo(PagesMeta::class, 'id', 'page_id')->where('name', $name)->first()['value'] ?? '';
+            $items = explode(',', $items);
+            return Product::whereIn('id', $items)->get();
+        } else {
+            return $this->belongsTo(PagesMeta::class, 'id', 'page_id')->where('name', $name)->first()['value'] ?? '';
+        }
+    }
 }
