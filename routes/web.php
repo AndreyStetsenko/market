@@ -222,6 +222,10 @@ Route::group([
     Route::delete('page/remove/image', 'PageController@removeImage')
         ->name('page.remove.image');
 
+    // Рефералка
+    Route::get('referr', 'ReferralController@index')->name('referr.index');
+    Route::post('referr/store', 'ReferralController@store')->name('referr.store');
+
     Route::get('withdraws', 'WithdrawsAdminController@withdraws')->name('withdraws');
     Route::post('withdraws/success', 'WithdrawsAdminController@withdrawSuccess')->name('withdraw.success');
 
