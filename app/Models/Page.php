@@ -36,7 +36,7 @@ class Page extends Model {
         if ( $type == 'products' ) {
             $items = $this->belongsTo(PagesMeta::class, 'id', 'page_id')->where('name', $name)->first()['value'] ?? '';
             $items = explode(',', $items);
-            return Product::whereIn('id', $items)->get();
+            return Product::whereIn('id', $items)->get() ?? '';
         } else {
             return $this->belongsTo(PagesMeta::class, 'id', 'page_id')->where('name', $name)->first()['value'] ?? '';
         }
