@@ -5,6 +5,7 @@ use App\Models\Product;
 use App\Models\User;
 use App\Models\Collection;
 use App\Models\Page;
+use App\Models\UsersStats;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller {
@@ -16,7 +17,9 @@ class IndexController extends Controller {
         $collections = Collection::get();
         $count_prod = count(Product::get());
         $page = Page::where('slug', '/')->first();
+        $topSellers = new UsersStats();
 
-        return view('site.pages.index', compact('new', 'hit', 'sale', 'users', 'collections', 'count_prod', 'page'));
+
+        return view('site.pages.index', compact('new', 'hit', 'sale', 'users', 'collections', 'count_prod', 'page', 'topSellers'));
     }
 }

@@ -11,6 +11,7 @@ use App\Helpers\ImageSaver;
 use App\Models\Order;
 use App\Models\BuyedUserProduct;
 use App\Models\UserResellProduct;
+use App\Models\UsersStats;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller {
@@ -154,6 +155,14 @@ class UserController extends Controller {
         $new_cont = $all_count - $request->count;
         $buy_product->count = $new_cont;
         $buy_product->update();
+
+        $stat = UsersStats::create([
+            'user_id' => $request->creator_id,
+            'table' => 'Product',
+            'param_id' => $request->product_id,
+            'type' => 'product_resell',
+            'value' => $request->count
+        ]);
 
         return redirect()->route('user.personal.sell-products')->with('success', 'Товар выставлен на продажу');
     }
